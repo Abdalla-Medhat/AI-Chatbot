@@ -5,7 +5,6 @@ import 'package:ai_chatbot_colab/view/themes.dart';
 import 'package:get_x/get.dart';
 
 void main() {
-  print("App Started=====>>>");
   runApp(const MyApp());
 }
 
