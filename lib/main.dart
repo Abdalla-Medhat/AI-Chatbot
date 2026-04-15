@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: Themes.lightTheme,
+      theme: Themes().lightTheme,
       title: "Chat Bot",
       getPages: [
         GetPage(name: "/", page: () => const Login()),
-        // GetPage(name: "/login", page: () => const Login()),
+        GetPage(name: "/home", page: () => const Home()),
       ],
     );
   }
