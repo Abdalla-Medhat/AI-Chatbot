@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
-import 'package:ai_chatbot_colab/controllers/homecontroller.dart';
+import 'package:ai_chatbot_colab/controllers/home_controller.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

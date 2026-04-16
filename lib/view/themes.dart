@@ -17,7 +17,7 @@ class Themes {
 
     textTheme: ThemeData().textTheme.copyWith(
       titleMedium: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-      titleSmall: const TextStyle(color: Colors.blueGrey),
+      titleSmall: TextStyle(color: colorScheme.onSurfaceVariant.withAlpha(80)),
       headlineLarge: ThemeData().textTheme.headlineLarge?.copyWith(
         fontWeight: FontWeight.bold,
         color: colorScheme.onSurface,

@@ -1,3 +1,4 @@
+import 'package:ai_chatbot_colab/view/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_chatbot_colab/view/home.dart';
 import 'package:ai_chatbot_colab/view/login.dart';
@@ -18,9 +19,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       title: "Chat Bot",
+      initialRoute: "/sign_up",
       getPages: [
-        GetPage(name: "/", page: () => const Login()),
+        // GetPage(name: "/", page: () => Login()),
         GetPage(name: "/home", page: () => const Home()),
+        GetPage(name: "/sign_up", page: () => SignUp()),
       ],
     );
   }
