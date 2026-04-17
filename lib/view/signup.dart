@@ -164,6 +164,7 @@ with privacy at the core.""",
                   ],
                 ),
               ),
+              // Password field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -305,37 +306,49 @@ with privacy at the core.""",
                       // the same reson as above(Material widget)
                       child: Material(
                         borderRadius: BorderRadius.circular(40),
-                        elevation: loginController.isPassFocused ? 5 : 0,
+                        elevation: loginController.isConfirmPassFocused ? 5 : 0,
                         child: GetBuilder<SignUpController>(
                           builder: (controller) {
                             return TextFormField(
-                              focusNode: controller.passwordFocusNode,
-                              controller: loginController.passwordController,
+                              focusNode: controller.confirmPassFocusNode,
+                              controller: loginController.confirmPassController,
                               validator: (value) {},
                               keyboardType: TextInputType.visiblePassword,
                               maxLines: 1,
-                              obscureText: loginController.isPasswordVisible,
+                              obscureText: loginController.isConfirmPassVisible,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(15),
                                 filled: true,
                                 hintText: "••••••••",
                                 hintStyle: TextStyle(
-                                  // fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSurfaceVariant.withAlpha(80),
                                 ),
-                                prefixIcon: Icon(Icons.lock_rounded),
-                                prefixIconColor:
-                                    controller.passwordFocusNode.hasFocus
-                                    ? Get.theme.colorScheme.onSurfaceVariant
-                                          .withAlpha(120)
-                                    : Get.theme.colorScheme.onSurfaceVariant
-                                          .withAlpha(80),
+                                prefixIconConstraints: const BoxConstraints(
+                                  minWidth: 40,
+                                  minHeight: 40,
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    "assets/images/shield_with_lock.png",
+                                    color:
+                                        controller.confirmPassFocusNode.hasFocus
+                                        ? Get.theme.colorScheme.onSurfaceVariant
+                                              .withAlpha(120)
+                                        : Get.theme.colorScheme.onSurfaceVariant
+                                              .withAlpha(95),
+                                    height: 10,
+                                    width: 10,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    loginController.isPasswordVisible
+                                    loginController.isConfirmPassVisible
                                         ? Icons.visibility_off_rounded
                                         : Icons.visibility_rounded,
                                   ),
@@ -343,7 +356,7 @@ with privacy at the core.""",
                                     context,
                                   ).colorScheme.onSurfaceVariant.withAlpha(150),
                                   onPressed: () {
-                                    controller.passIconVisibility();
+                                    controller.confirmPassIconVisibility();
                                   },
                                 ),
                                 border: OutlineInputBorder(
@@ -407,7 +420,7 @@ with privacy at the core.""",
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 35, bottom: 10),
+                padding: const EdgeInsets.only(top: 25, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
