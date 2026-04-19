@@ -117,7 +117,7 @@ with privacy at the core.""",
                                 if (value == null) {
                                   return "Please enter your email";
                                 } else {
-                                  controller.isEmailValid(value);
+                                  return controller.isEmailValid(value);
                                 }
                               },
                               keyboardType: TextInputType.emailAddress,
@@ -287,137 +287,132 @@ with privacy at the core.""",
                 ],
               ),
               // Confirmation Section =====================>
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: GetPlatform.isMobile
-                            ? (portrait ? width * 0.12 : width * 0.18)
-                            : portrait
-                            ? width * 0.12
-                            : width * 0.38,
-                      ),
-                      child: Text(
-                        "Confirm Password",
-                        style: Get.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurfaceVariant.withAlpha(200),
-                        ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: GetPlatform.isMobile
+                          ? (portrait ? width * 0.12 : width * 0.18)
+                          : portrait
+                          ? width * 0.12
+                          : width * 0.38,
+                    ),
+                    child: Text(
+                      "Confirm Password",
+                      style: Get.textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurfaceVariant.withAlpha(200),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: GetPlatform.isMobile
-                            ? (portrait ? width * 0.07 : width * 0.15)
-                            : portrait
-                            ? width * 0.1
-                            : width * 0.3,
-                      ),
-                      // the same reson as above(Material widget)
-                      child: Material(
-                        borderRadius: BorderRadius.circular(40),
-                        elevation: signUpController.isConfirmPassFocused
-                            ? 5
-                            : 0,
-                        child: GetBuilder<SignUpController>(
-                          builder: (controller) {
-                            // Confirmation Password TextFormField
-                            return TextFormField(
-                              focusNode: controller.confirmPassFocusNode,
-                              controller: controller.confirmPassController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter the Password Confirmation';
-                                } else if (value !=
-                                    controller.passwordController.text) {
-                                  return "Password confirmation doesn't match";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              keyboardType: TextInputType.visiblePassword,
-                              maxLines: 1,
-                              obscureText: controller.isConfirmPassVisible,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(15),
-                                filled: true,
-                                hintText: "••••••••",
-                                hintStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant.withAlpha(80),
-                                ),
-                                prefixIconConstraints: const BoxConstraints(
-                                  minWidth: 40,
-                                  minHeight: 40,
-                                ),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    "assets/images/shield_with_lock.png",
-                                    color:
-                                        controller.confirmPassFocusNode.hasFocus
-                                        ? Get.theme.colorScheme.onSurfaceVariant
-                                              .withAlpha(120)
-                                        : Get.theme.colorScheme.onSurfaceVariant
-                                              .withAlpha(95),
-                                    height: 10,
-                                    width: 10,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    controller.isConfirmPassVisible
-                                        ? Icons.visibility_off_rounded
-                                        : Icons.visibility_rounded,
-                                  ),
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant.withAlpha(150),
-                                  onPressed: () {
-                                    controller.confirmPassIconVisibility();
-                                  },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: GetPlatform.isMobile
+                          ? (portrait ? width * 0.07 : width * 0.15)
+                          : portrait
+                          ? width * 0.1
+                          : width * 0.3,
+                    ),
+                    // the same reson as above(Material widget)
+                    child: Material(
+                      borderRadius: BorderRadius.circular(40),
+                      elevation: signUpController.isConfirmPassFocused ? 5 : 0,
+                      child: GetBuilder<SignUpController>(
+                        builder: (controller) {
+                          // Confirmation Password TextFormField
+                          return TextFormField(
+                            focusNode: controller.confirmPassFocusNode,
+                            controller: controller.confirmPassController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the Password Confirmation';
+                              } else if (value !=
+                                  controller.passwordController.text) {
+                                return "Password confirmation doesn't match";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLines: 1,
+                            obscureText: controller.isConfirmPassVisible,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(15),
+                              filled: true,
+                              hintText: "••••••••",
+                              hintStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant.withAlpha(80),
+                              ),
+                              prefixIconConstraints: const BoxConstraints(
+                                minWidth: 40,
+                                minHeight: 40,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  "assets/images/shield_with_lock.png",
+                                  color:
+                                      controller.confirmPassFocusNode.hasFocus
+                                      ? Get.theme.colorScheme.onSurfaceVariant
+                                            .withAlpha(120)
+                                      : Get.theme.colorScheme.onSurfaceVariant
+                                            .withAlpha(95),
+                                  height: 10,
+                                  width: 10,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
-                            );
-                          },
-                        ),
+
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.isConfirmPassVisible
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded,
+                                ),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant.withAlpha(150),
+                                onPressed: () {
+                                  controller.confirmPassIconVisibility();
+                                },
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide: BorderSide.none,
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide: BorderSide.none,
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(40),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Container(
                 margin: EdgeInsets.symmetric(
@@ -431,7 +426,11 @@ with privacy at the core.""",
                 height: GetPlatform.isMobile ? 65 : 75,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.offAllNamed("/home");
+                    if (signUpController.formKey.currentState!.validate()) {
+                      Get.offAllNamed("/home");
+                    } else {
+                      Get.snackbar("Error", "Please fill all the fields");
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -448,7 +447,7 @@ with privacy at the core.""",
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -479,7 +478,7 @@ with privacy at the core.""",
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
