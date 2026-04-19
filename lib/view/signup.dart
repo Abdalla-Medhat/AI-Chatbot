@@ -5,7 +5,7 @@ import "package:get_x/get.dart";
 class SignUp extends StatelessWidget {
   SignUp({super.key});
 
-  final SignUpController loginController = Get.put(SignUpController());
+  final SignUpController signUpController = Get.put(SignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SignUp extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(
-          key: loginController.formKey,
+          key: signUpController.formKey,
           child: ListView(
             children: [
               Padding(
@@ -70,7 +70,7 @@ with privacy at the core.""",
                   ),
                 ),
               ),
-
+              // Email Section ====================>
               Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
                 child: Column(
@@ -106,13 +106,20 @@ with privacy at the core.""",
                       // Using Material widget to controll the elevation throw the elevation property and focusNode
                       child: Material(
                         borderRadius: BorderRadius.circular(40),
-                        elevation: loginController.isEmailFocused ? 5 : 0,
+                        elevation: signUpController.isEmailFocused ? 5 : 0,
+                        // Email TextField ====================>
                         child: GetBuilder<SignUpController>(
                           builder: (controller) {
                             return TextFormField(
                               focusNode: controller.emailFocusNode,
                               controller: controller.emailController,
-                              validator: (value) {},
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please enter your email";
+                                } else {
+                                  controller.isEmailValid(value);
+                                }
+                              },
                               keyboardType: TextInputType.emailAddress,
                               maxLines: 1,
                               decoration: InputDecoration(
@@ -164,7 +171,7 @@ with privacy at the core.""",
                   ],
                 ),
               ),
-              // Password field
+              // Password section =====================>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -198,16 +205,25 @@ with privacy at the core.""",
                     // the same reson as above(Material widget)
                     child: Material(
                       borderRadius: BorderRadius.circular(40),
-                      elevation: loginController.isPassFocused ? 5 : 0,
+                      elevation: signUpController.isPassFocused ? 5 : 0,
+                      // Password TextField ==================>
                       child: GetBuilder<SignUpController>(
                         builder: (controller) {
                           return TextFormField(
                             focusNode: controller.passwordFocusNode,
-                            controller: loginController.passwordController,
-                            validator: (value) {},
+                            controller: controller.passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the password';
+                              } else if (value.length < 8) {
+                                return "Password must be at least 8 characters long";
+                              } else {
+                                return null;
+                              }
+                            },
                             keyboardType: TextInputType.visiblePassword,
                             maxLines: 1,
-                            obscureText: loginController.isPasswordVisible,
+                            obscureText: controller.isPasswordVisible,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(15),
                               filled: true,
@@ -228,7 +244,7 @@ with privacy at the core.""",
                                         .withAlpha(80),
                               suffixIcon: IconButton(
                                 icon: Icon(
-                                  loginController.isPasswordVisible
+                                  controller.isPasswordVisible
                                       ? Icons.visibility_off_rounded
                                       : Icons.visibility_rounded,
                                 ),
@@ -270,7 +286,7 @@ with privacy at the core.""",
                   ),
                 ],
               ),
-              // Confirmation field
+              // Confirmation Section =====================>
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Column(
@@ -306,16 +322,28 @@ with privacy at the core.""",
                       // the same reson as above(Material widget)
                       child: Material(
                         borderRadius: BorderRadius.circular(40),
-                        elevation: loginController.isConfirmPassFocused ? 5 : 0,
+                        elevation: signUpController.isConfirmPassFocused
+                            ? 5
+                            : 0,
                         child: GetBuilder<SignUpController>(
                           builder: (controller) {
+                            // Confirmation Password TextFormField
                             return TextFormField(
                               focusNode: controller.confirmPassFocusNode,
-                              controller: loginController.confirmPassController,
-                              validator: (value) {},
+                              controller: controller.confirmPassController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter the Password Confirmation';
+                                } else if (value !=
+                                    controller.passwordController.text) {
+                                  return "Password confirmation doesn't match";
+                                } else {
+                                  return null;
+                                }
+                              },
                               keyboardType: TextInputType.visiblePassword,
                               maxLines: 1,
-                              obscureText: loginController.isConfirmPassVisible,
+                              obscureText: controller.isConfirmPassVisible,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(15),
                                 filled: true,
@@ -348,7 +376,7 @@ with privacy at the core.""",
 
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    loginController.isConfirmPassVisible
+                                    controller.isConfirmPassVisible
                                         ? Icons.visibility_off_rounded
                                         : Icons.visibility_rounded,
                                   ),
