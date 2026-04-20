@@ -1,0 +1,124 @@
+{
+  "data": [
+    {
+      "label": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "Is anyone there?",
+        "Hello",
+        "Hay"
+      ],
+      "responses": [
+        "Hello",
+        "Hi",
+        "Hi there",
+        "Hey"
+      ]
+    },
+    {
+      "label": "about",
+      "patterns": [
+        "Who are you?",
+        "What are you?",
+        "Who you are?"
+      ],
+      "responses": [
+        "I'm Zain, your bot assistant!",
+        "I'm Zain, an Artificial Intelligent bot!",
+        "I'm Zain, an Amit Artificial Intelligent bot"
+      ]
+    },
+    {
+      "label": "name",
+      "patterns": [
+        "What is your name?",
+        "What should I call you?",
+        "What's your name?"
+      ],
+      "responses": [
+        "You can call me Zain",
+        "I'm Zain!",
+        "Just call me as Zain"
+      ]
+    },
+    {
+      "label": "help",
+      "patterns": [
+        "Could you help me?",
+        "Give me a hand please",
+        "Can you help?",
+        "What can you do for me?",
+        "I need a support",
+        "I need a help",
+        "Support me please"
+      ],
+      "responses": [
+        "Tell me how can assist you",
+        "Tell me your problem to assist you",
+        "Yes Sure, How can I support you?"
+      ]
+    },
+    {
+      "label": "sad",
+      "patterns": [
+        "I'm so sad",
+        "I'm sad",
+        "I feel sad",
+        "I feel so sad",
+        "I am sad",
+        "I'm alone",
+        "I have a lot of problems"
+      ],
+      "responses": [
+        "It is better for you to pray",
+        "Get close to Allah",
+        "You can watch a movie",
+        "Go out with your friends",
+        "It will be okay"
+      ]
+    },
+    {
+      "label": "positive_sen",
+      "patterns": [
+        "I am depressed",
+        "I need encouragement",
+        "I'm so frustrated",
+        "I'm so frustrated with myself because I lost confidence"
+      ],
+      "responses": [
+        "I think you are great!",
+        "You are a genius!",
+        "You are awesome!"
+      ]
+    },
+    {
+      "label": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That's helpful",
+        "Thanks for the help"
+      ],
+      "responses": [
+        "Happy to help!",
+        "Any time",
+        "You're welcome!",
+        "You're most welcome!"
+      ]
+    },
+    {
+      "label": "goodbye",
+      "patterns": [
+        "Bye",
+        "See you later",
+        "Goodbye"
+      ],
+      "responses": [
+        "See you later",
+        "Have a nice day",
+        "Bye! Come back again"
+      ]
+    }
+  ]
+}
