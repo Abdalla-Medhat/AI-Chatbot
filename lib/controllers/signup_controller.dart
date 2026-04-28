@@ -2,12 +2,13 @@ import 'package:get_x/get.dart';
 import 'package:flutter/material.dart';
 
 class SignUpController extends GetxController {
+  // Key for the Form
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  // TextEditingControllers for the TextFields
   late TextEditingController emailController;
   late TextEditingController passwordController;
   late TextEditingController confirmPassController;
-
+  // FocusNodes for the TextFields
   late FocusNode emailFocusNode;
   late FocusNode passwordFocusNode;
   late FocusNode confirmPassFocusNode;
@@ -25,6 +26,7 @@ class SignUpController extends GetxController {
     ).hasMatch(email);
   }
 
+  /// Email Validation function
   String? isEmailValid(String email) {
     if (email.isEmpty) {
       return 'Please enter some text';
@@ -71,7 +73,6 @@ class SignUpController extends GetxController {
     confirmPassFocusNode = FocusNode();
 
     // Listen to the focus changes To change the elevation in the TextField
-
     setupfocus(emailFocusNode, (val) => isEmailFocused = val);
     setupfocus(passwordFocusNode, (val) => isPassFocused = val);
     setupfocus(confirmPassFocusNode, (val) => isConfirmPassFocused = val);
