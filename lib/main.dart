@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       title: "Chat Bot",
-      initialRoute: "/sign_up",
+      initialRoute: "/",
       getPages: [
-        // GetPage(name: "/", page: () => Login()),
+        GetPage(name: "/", page: () => Login()),
         GetPage(name: "/home", page: () => const Home()),
         GetPage(name: "/sign_up", page: () => SignUp()),
       ],
