@@ -49,3 +49,6 @@ venv/
 .env/
 __pycache__/
 *.pyc
+
+# related with vscode
+.vscode/
