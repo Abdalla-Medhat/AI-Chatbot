@@ -463,7 +463,7 @@ with privacy at the core.""",
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed("/sign_up");
+                        Get.toNamed("/");
                       },
                       child: Text(
                         "Login",
