@@ -112,7 +112,13 @@ class Login extends StatelessWidget {
                             return TextFormField(
                               focusNode: controller.emailFocusNode,
                               controller: controller.emailController,
-                              validator: (value) {},
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please enter your email";
+                                } else {
+                                  return controller.isEmailValid(value);
+                                }
+                              },
                               keyboardType: TextInputType.emailAddress,
                               expands: true,
                               maxLines: null,
@@ -202,7 +208,15 @@ class Login extends StatelessWidget {
                           return TextFormField(
                             focusNode: controller.passwordFocusNode,
                             controller: loginController.passwordController,
-                            validator: (value) {},
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the password';
+                              } else if (value.length < 8) {
+                                return "Password must be at least 8 characters long";
+                              } else {
+                                return null;
+                              }
+                            },
                             keyboardType: TextInputType.visiblePassword,
 
                             maxLines: 1,
@@ -279,7 +293,11 @@ class Login extends StatelessWidget {
                 height: GetPlatform.isMobile ? 65 : 75,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.offAllNamed("/home");
+                    if (loginController.formKey.currentState!.validate()) {
+                      Get.offAllNamed("/home");
+                    } else {
+                      Get.snackbar("Error", "Please fill all the fields");
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
