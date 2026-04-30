@@ -58,4 +58,18 @@ class SQLData {
     int response = await myDB!.rawInsert(sql);
     return response;
   }
+
+  //Update data in the database
+  Future<int> updateData(String sql) async {
+    Database? myDB = await db;
+    int response = await myDB!.rawUpdate(sql);
+    return response;
+  }
+
+  //Delete data from the database
+  Future<int> deleteData(String sql) async {
+    Database? myDB = await db;
+    int response = await myDB!.rawDelete(sql);
+    return response;
+  }
 }
