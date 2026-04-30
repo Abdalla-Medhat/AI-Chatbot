@@ -45,4 +45,17 @@ class SQLData {
     int oldVersion,
     int newVersion,
   ) async {}
+  //Select data from the database
+  Future<List<Map<String, Object?>>> readData(String sql) async {
+    Database? myDB = await db;
+    List<Map<String, Object?>> response = await myDB!.rawQuery(sql);
+    return response;
+  }
+
+  //Insert data into the database
+  Future<int> insertData(String sql) async {
+    Database? myDB = await db;
+    int response = await myDB!.rawInsert(sql);
+    return response;
+  }
 }
