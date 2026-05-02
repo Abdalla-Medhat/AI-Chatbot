@@ -72,4 +72,11 @@ class SQLData {
     int response = await myDB!.rawDelete(sql);
     return response;
   }
+
+  ///Delete the database
+  Future<void> deleteDB() async {
+    String path = await getDatabasesPath();
+    String fullPath = join(path, "chatbot.db");
+    await deleteDatabase(fullPath);
+  }
 }
