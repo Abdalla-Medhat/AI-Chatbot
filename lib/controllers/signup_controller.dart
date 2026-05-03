@@ -96,11 +96,11 @@ class SignUpController extends GetxController {
 
   ///dedicating Email function to check if the email is already exists in the database or not
   Future<String?> dedicateEmail(String email) async {
-    List value = await sqlData.readData(
+    List data = await sqlData.readData(
       "SELECT EMAIL from Users WHERE EMAIL='$email'",
     );
 
-    if (value.isNotEmpty) {
+    if (data.isNotEmpty) {
       return "This Email is already exists.";
     }
 
