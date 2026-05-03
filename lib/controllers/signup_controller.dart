@@ -1,7 +1,11 @@
+import 'package:ai_chatbot_colab/repository/data.dart';
 import 'package:get_x/get.dart';
 import 'package:flutter/material.dart';
 
 class SignUpController extends GetxController {
+  // Instance of the SQLData class to begin interacting with the database
+  SQLData sqlData = SQLData();
+
   // Key for the Form
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   // TextEditingControllers for the TextFields
@@ -88,5 +92,18 @@ class SignUpController extends GetxController {
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     confirmPassFocusNode.dispose();
+  }
+
+  ///dedicating Email function to check if the email is already exists in the database or not
+  Future<String?> dedicateEmail(String email) async {
+    List value = await sqlData.readData(
+      "SELECT EMAIL from Users WHERE EMAIL='$email'",
+    );
+
+    if (value.isNotEmpty) {
+      return "This Email is already exists.";
+    }
+
+    return null;
   }
 }
