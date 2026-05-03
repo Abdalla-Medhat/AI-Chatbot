@@ -94,8 +94,8 @@ class SignUpController extends GetxController {
     confirmPassFocusNode.dispose();
   }
 
-  ///dedicating Email function to check if the email is already exists in the database or not
-  Future<String?> dedicateEmail(String email) async {
+  ///Checking Email function to check if the email is already exists in the database or not
+  Future<String?> checkEmail(String email) async {
     List data = await sqlData.readData(
       "SELECT EMAIL from Users WHERE EMAIL='$email'",
     );
