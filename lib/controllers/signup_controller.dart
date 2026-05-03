@@ -106,4 +106,12 @@ class SignUpController extends GetxController {
 
     return null;
   }
+
+  /// Adding User to the database
+  Future addingUser(String email, String password) async {
+    int response = await sqlData.insertData(
+      "INSERT INTO `USERS` (EMAIL,PASSWORD) VALUES ('$email','$password')",
+    );
+    return response;
+  }
 }
