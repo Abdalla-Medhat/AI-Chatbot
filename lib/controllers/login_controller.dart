@@ -1,13 +1,19 @@
+import 'package:ai_chatbot_colab/repository/data.dart';
 import 'package:get_x/get.dart';
 import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  SQLData sqlData = SQLData();
 
+  /// Form Key
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // Text Editing Controllers
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  // Focus Nodes
   late FocusNode emailFocusNode;
   late FocusNode passwordFocusNode;
+  // Booleans
   bool isEmailFocused = false;
   bool isPassFocused = false;
   bool isPasswordVisible = false;
@@ -59,6 +65,25 @@ class LoginController extends GetxController {
     passwordFocusNode = FocusNode();
     setupfocus(emailFocusNode, (val) => isEmailFocused = val);
     setupfocus(passwordFocusNode, (val) => isPassFocused = val);
+  }
+
+  ///Checking Email function to check if the email is already exists in the database or not
+  Future<String?> checkAuthentication(String email, String password) async {
+    List data = await sqlData.readData(
+      "SELECT * from Users WHERE EMAIL='$email' ",
+    );
+    if (data.isEmpty) {
+      return "The account does not exist";
+    }
+    if (data.isNotEmpty) {
+      if (data[0]['EMAIL'] == email && data[0]['PASSWORD'] == password) {
+        return "Operation Successfully Completed";
+      } else {
+        return "Incorrect password";
+      }
+    }
+
+    return null;
   }
 
   @override
