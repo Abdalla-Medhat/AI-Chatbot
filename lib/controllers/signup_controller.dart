@@ -27,6 +27,7 @@ class SignUpController extends GetxController {
   bool emailRegExp(String email) {
     return RegExp(
       r'^[a-z0-9]([a-z0-9_%+\-]|\.(?!\.))*[a-z0-9]@[a-z0-9][a-z0-9\-]*(\.[a-z0-9\-]+)*\.[a-z]{2,}$',
+      caseSensitive: false,
     ).hasMatch(email);
   }
 
