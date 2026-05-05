@@ -29,10 +29,10 @@ class SQLData {
   //Create the database
   FutureOr<void> _onCreate(Database db, int version) async {
     db.execute("""
-  Create Table `Users` (id INTEGER PRIMARY KEY AUTOINCREMENT,
+  Create Table `USERS` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT,
   `EMAIL` TEXT NOT NULL,
   `PASSWORD` TEXT NOT NULL,
-  `USER_NAME` TEXT DEFAULT "User",
+  `USER_NAME` TEXT ,
   `CONVERSATION` TEXT ,
   UNIQUE(EMAIL))
 """);
@@ -78,5 +78,6 @@ class SQLData {
     String path = await getDatabasesPath();
     String fullPath = join(path, "chatbot.db");
     await deleteDatabase(fullPath);
+    print("Database Deleted Successfully =======================>>");
   }
 }

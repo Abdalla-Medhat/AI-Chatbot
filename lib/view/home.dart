@@ -1,4 +1,4 @@
-import 'package:ai_chatbot_colab/repository/data.dart';
+import 'package:ai_chatbot_colab/services/db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_x/get.dart';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
