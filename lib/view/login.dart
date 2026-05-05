@@ -292,9 +292,31 @@ class Login extends StatelessWidget {
                 ),
                 height: GetPlatform.isMobile ? 65 : 75,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (loginController.formKey.currentState!.validate()) {
-                      Get.offAllNamed("/home");
+                      //check if the email and password are correct
+                      String? checkData = await loginController
+                          .checkAuthentication(
+                            loginController.emailController.text.trim(),
+                            loginController.passwordController.text.trim(),
+                          );
+                      if (checkData == "Operation Successfully Completed") {
+                        print("Login Successfully ===================>>>");
+                        Get.offAllNamed(
+                          "/home",
+                          parameters: {
+                            "email": loginController.emailController.text
+                                .trim(),
+                          },
+                        );
+                      } else if (checkData == "The account does not exist") {
+                        Get.snackbar(
+                          "Error",
+                          "Both email and password are incorrect",
+                        );
+                      } else {
+                        Get.snackbar("Error", "Incorrect password");
+                      }
                     } else {
                       Get.snackbar("Error", "Please fill all the fields");
                     }
