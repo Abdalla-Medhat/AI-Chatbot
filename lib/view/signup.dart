@@ -425,9 +425,35 @@ with privacy at the core.""",
                 ),
                 height: GetPlatform.isMobile ? 65 : 75,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (signUpController.formKey.currentState!.validate()) {
-                      Get.offAllNamed("/home");
+                      //check if the email is already exists
+                      String? checkEmail = await signUpController.checkEmail(
+                        signUpController.emailController.text.trim(),
+                      );
+                      if (checkEmail != null) {
+                        Get.snackbar("Error", checkEmail);
+                        return;
+                      }
+                      int response = await signUpController.addingUser(
+                        signUpController.emailController.text.trim(),
+                        signUpController.passwordController.text.trim(),
+                      );
+                      if (response == 0) {
+                        Get.snackbar("Error", "Failed to create an account");
+                        return;
+                      } else if (response > 0) {
+                        print(
+                          "User Added Successfully =======================>>",
+                        );
+                        Get.offAllNamed(
+                          "/home",
+                          parameters: {
+                            "email": signUpController.emailController.text
+                                .trim(),
+                          },
+                        );
+                      }
                     } else {
                       Get.snackbar("Error", "Please fill all the fields");
                     }
