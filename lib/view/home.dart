@@ -412,39 +412,6 @@ ${controller.messages[index]['sender']}: ${controller.messages[index]['message']
                 ),
               ],
             ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: SizedBox(
-                  height: portrait ? height * 0.075 : height * 0.15,
-                  width: portrait ? width * 0.5 : width * 0.3,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () async {
-                      dynamic response = await SQLData().deleteDB();
-                      print(response);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/chatrounded.png"),
-                        SizedBox(width: 10),
-                        Text(
-                          "Start Chat",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
         bottomNavigationBar: GetBuilder<HomeController>(
