@@ -5,13 +5,12 @@ import 'package:ai_chatbot_colab/utilities/sizes.dart';
 import 'package:ai_chatbot_colab/controllers/home_controller.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
-
+  Home({super.key});
+  final HomeController controller = Get.put(HomeController());
+  final String signedmail = Get.parameters['email']!;
   @override
   Widget build(BuildContext context) {
     print("Home Built");
-    final Signedmail = Get.parameters['email'];
-    HomeController c = Get.put(HomeController());
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     bool portrait = Get.context!.orientation == Orientation.portrait;
@@ -240,25 +239,23 @@ class Home extends StatelessWidget {
         ),
         body: Column(
           children: [
-            c.startChat
+            controller.startChat
                 ? Expanded(
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 30.0),
-                      child: ListView(
+                      child: ListView.builder(
                         shrinkWrap: true,
-                        children: [
-                          Text("""
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              startResizingAnimationIfNeeded: types=statusBars host=com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab/com.abdallahmedhat.ai.chatbot.colab.ai_chatbot_colab.MainActivity
-              
+                        itemCount: controller.messages.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Text("""
+${controller.messages[index]['sender']}: ${controller.messages[index]['message']}
               """, style: TextStyle(fontSize: 17)),
-                        ],
+                              SizedBox(height: 10),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   )
@@ -386,6 +383,7 @@ class Home extends StatelessWidget {
                     width: Sizes().getTextFieldWidth(portrait),
                     height: portrait ? height * 0.07 : height * 0.150,
                     child: TextFormField(
+                      controller: controller.chatController,
                       decoration: InputDecoration(
                         hintText: "Type your message...",
                       ),
@@ -402,7 +400,13 @@ class Home extends StatelessWidget {
                       ),
                     ),
 
-                    onPressed: () {},
+                    onPressed: () {
+                      //fetch the user message and send it to the API, then update the chat with both the user message and the bot response
+                      if (controller.chatController.text.trim().isEmpty) return;
+                      controller.chating(signedmail);
+                      controller.startChat = true;
+                      controller.update();
+                    },
                     child: Image.asset("assets/images/arrow.png"),
                   ),
                 ),

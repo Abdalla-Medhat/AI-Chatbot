@@ -12,7 +12,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  ///Chatting function that sends the user message to the API and updates the chat with the bot response.
+  ///Chatting function that sends the user message to the API and updates the chat with the bot's response.
   Future<void> chating(String email) async {
     if (chatController.text.trim().isEmpty) return;
     String userMessage = chatController.text.trim();
