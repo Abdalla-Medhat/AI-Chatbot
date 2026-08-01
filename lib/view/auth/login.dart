@@ -1,6 +1,7 @@
-import "package:ai_chatbot_colab/controllers/login_controller.dart";
+import "package:ai_chatbot_colab/controllers/authentication_controller/login_controller.dart";
+import "package:ai_chatbot_colab/theme/styles.dart";
 import "package:flutter/material.dart";
-import "package:get_x/get.dart";
+import 'package:get/get.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -55,7 +56,9 @@ class Login extends StatelessWidget {
               Text(
                 "Welcome back",
                 textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge,
+                style: Get.textTheme.headlineLarge!.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 17),
@@ -65,7 +68,7 @@ class Login extends StatelessWidget {
                   style: Get.textTheme.bodyLarge!.copyWith(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurfaceVariant.withAlpha(200),
+                    ).colorScheme.onSurfaceVariant.withAlpha(220),
                   ),
                 ),
               ),
@@ -85,8 +88,8 @@ class Login extends StatelessWidget {
                       ),
                       child: Text(
                         "EMAIL ADDRESS",
-                        style: Get.textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
+                        style: Get.textTheme.labelMedium!.copyWith(
+                          fontWeight: FontWeight.w900,
                           color: Theme.of(
                             context,
                           ).colorScheme.onSurfaceVariant.withAlpha(200),
@@ -94,7 +97,6 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      height: GetPlatform.isMobile ? 90 : 110,
                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
                       margin: EdgeInsets.symmetric(
                         horizontal: GetPlatform.isMobile
@@ -103,66 +105,28 @@ class Login extends StatelessWidget {
                             ? width * 0.1
                             : width * 0.3,
                       ),
+
                       // Using Material widget to controll the elevation throw the elevation property and focusNode
-                      child: Material(
-                        borderRadius: BorderRadius.circular(40),
-                        elevation: loginController.isEmailFocused ? 5 : 0,
-                        child: GetBuilder<LoginController>(
-                          builder: (controller) {
-                            return TextFormField(
-                              focusNode: controller.emailFocusNode,
-                              controller: controller.emailController,
-                              validator: (value) {
-                                if (value == null) {
-                                  return "Please enter your email";
-                                } else {
-                                  return controller.isEmailValid(value);
-                                }
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              expands: true,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                filled: true,
-                                hintText: "alex@example.com",
-                                hintStyle: TextStyle(
-                                  color: Get.theme.colorScheme.onSurfaceVariant
-                                      .withAlpha(80),
-                                ),
-                                prefixIcon: Icon(Icons.email_rounded),
-                                prefixIconColor:
-                                    controller.emailFocusNode.hasFocus
-                                    ? Get.theme.colorScheme.onSurfaceVariant
-                                          .withAlpha(120)
-                                    : Get.theme.colorScheme.onSurfaceVariant
-                                          .withAlpha(80),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                      child: GetBuilder<LoginController>(
+                        builder: (controller) {
+                          return TextFormField(
+                            focusNode: controller.emailFocusNode,
+                            controller: controller.emailController,
+                            validator: (value) {
+                              if (value == null) {
+                                return "Please enter your email";
+                              } else {
+                                return controller.isEmailValid(value);
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              hintText: "alex@example.com",
+
+                              prefixIcon: Icon(Icons.email_rounded),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -181,8 +145,8 @@ class Login extends StatelessWidget {
                     ),
                     child: Text(
                       "PASSWORD",
-                      style: Get.textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.w500,
+                      style: Get.textTheme.labelMedium!.copyWith(
+                        fontWeight: FontWeight.w900,
                         color: Theme.of(
                           context,
                         ).colorScheme.onSurfaceVariant.withAlpha(200),
@@ -190,7 +154,6 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: GetPlatform.isMobile ? 90 : 110,
                     padding: const EdgeInsets.only(top: 10.0, bottom: 20),
                     margin: EdgeInsets.symmetric(
                       horizontal: GetPlatform.isMobile
@@ -199,84 +162,45 @@ class Login extends StatelessWidget {
                           ? width * 0.1
                           : width * 0.3,
                     ),
-                    // the same reson as above(Material widget)
-                    child: Material(
-                      borderRadius: BorderRadius.circular(40),
-                      elevation: loginController.isPassFocused ? 5 : 0,
-                      child: GetBuilder<LoginController>(
-                        builder: (controller) {
-                          return TextFormField(
-                            focusNode: controller.passwordFocusNode,
-                            controller: loginController.passwordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter the password';
-                              } else if (value.length < 8) {
-                                return "Password must be at least 8 characters long";
-                              } else {
-                                return null;
-                              }
-                            },
-                            keyboardType: TextInputType.visiblePassword,
 
-                            maxLines: 1,
-                            obscureText: loginController.isPasswordVisible,
-                            decoration: InputDecoration(
-                              filled: true,
-                              hintText: "••••••••",
-                              hintStyle: TextStyle(
-                                fontSize: 25,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant.withAlpha(80),
+                    // the same reson as above(Material widget)
+                    child: GetBuilder<LoginController>(
+                      builder: (controller) {
+                        return TextFormField(
+                          focusNode: controller.passwordFocusNode,
+                          controller: loginController.passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the password';
+                            } else if (value.length < 8) {
+                              return "Password must be at least 8 characters long";
+                            } else {
+                              return null;
+                            }
+                          },
+                          keyboardType: TextInputType.visiblePassword,
+
+                          maxLines: 1,
+                          obscureText: loginController.isPasswordVisible,
+                          decoration: InputDecoration(
+                            hintText: "••••••••",
+                            // hintStyle: TextStyle(fontSize: 25),
+                            prefixIcon: Icon(Icons.lock_rounded),
+
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                loginController.isPasswordVisible
+                                    ? Icons.visibility_off_rounded
+                                    : Icons.visibility_rounded,
                               ),
-                              prefixIcon: Icon(Icons.lock_rounded),
-                              prefixIconColor:
-                                  controller.passwordFocusNode.hasFocus
-                                  ? Get.theme.colorScheme.onSurfaceVariant
-                                        .withAlpha(120)
-                                  : Get.theme.colorScheme.onSurfaceVariant
-                                        .withAlpha(80),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  loginController.isPasswordVisible
-                                      ? Icons.visibility_off_rounded
-                                      : Icons.visibility_rounded,
-                                ),
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant.withAlpha(150),
-                                onPressed: () {
-                                  controller.passIconVisibility();
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                borderSide: BorderSide.none,
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                borderSide: BorderSide.none,
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40),
-                                borderSide: BorderSide.none,
-                              ),
+
+                              onPressed: () {
+                                controller.passIconVisibility();
+                              },
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -302,13 +226,7 @@ class Login extends StatelessWidget {
                           );
                       if (checkData == "Operation Successfully Completed") {
                         print("Login Successfully ===================>>>");
-                        Get.offAllNamed(
-                          "/home",
-                          parameters: {
-                            "email": loginController.emailController.text
-                                .trim(),
-                          },
-                        );
+                        Get.offAllNamed("/home");
                       } else if (checkData == "The account does not exist") {
                         Get.snackbar(
                           "Error",
@@ -326,9 +244,8 @@ class Login extends StatelessWidget {
                     children: [
                       Text(
                         "Login",
-                        style: TextStyle(
-                          fontSize: GetPlatform.isMobile ? 20 : 25,
-                          fontWeight: FontWeight.w600,
+                        style: AppTextStyles.textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       Padding(
@@ -349,22 +266,21 @@ class Login extends StatelessWidget {
                   children: [
                     Text(
                       "New to ChatBot?   ",
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.onSurfaceVariant,
-                        fontSize: GetPlatform.isMobile ? 17 : 25,
-                        fontWeight: FontWeight.w400,
+                      style: Get.textTheme.bodyLarge!.copyWith(
+                        color: Get.theme.colorScheme.onSurfaceVariant.withAlpha(
+                          240,
+                        ),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed("/sign_up");
+                        Get.offNamed("/sign_up");
                       },
                       child: Text(
                         "Sign Up",
-                        style: TextStyle(
-                          fontSize: GetPlatform.isMobile ? 17 : 25,
+                        style: Get.textTheme.bodyLarge!.copyWith(
                           color: Get.theme.colorScheme.primary,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ),
@@ -388,7 +304,12 @@ class Login extends StatelessWidget {
 
                     Text(
                       "Your data is stored locally on this device.",
-                      style: Get.textTheme.titleSmall!,
+                      softWrap: true,
+                      style: Get.textTheme.titleSmall?.copyWith(
+                        color: Get.theme.colorScheme.onSurfaceVariant.withAlpha(
+                          200,
+                        ),
+                      ),
                     ),
                   ],
                 ),

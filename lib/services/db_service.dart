@@ -28,14 +28,27 @@ class SQLData {
 
   //Create the database
   FutureOr<void> _onCreate(Database db, int version) async {
-    db.execute("""
+    Batch batch = db.batch();
+    batch.execute("""
   Create Table `USERS` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT,
   `EMAIL` TEXT NOT NULL,
   `PASSWORD` TEXT NOT NULL,
-  `USER_NAME` TEXT ,
-  `CONVERSATION` TEXT ,
+  `USER_NAME` TEXT 'Abdallah' ,
+  `IMAGE` TEXT,
+  `IS_LOGGED_IN` INTEGER NOT NULL DEFAULT 0,
   UNIQUE(EMAIL))
 """);
+    batch.execute("""
+  Create Table `Chats` (
+  `ID` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `MESSAGE` TEXT NOT NULL,
+  `USER_ID` INTEGER NOT NULL,
+  `TIMESTAMP` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(`USER_ID`) REFERENCES `USERS`(`ID`)
+  )
+""");
+    await batch.commit();
+
     print("Database Created Successfully =======================>>");
   }
 
@@ -45,31 +58,32 @@ class SQLData {
     int oldVersion,
     int newVersion,
   ) async {}
+
   //Select data from the database
-  Future<List<Map<String, Object?>>> readData(String sql) async {
+  Future<List<Map>> readData(String sql, List<Object?>? args) async {
     Database? myDB = await db;
-    List<Map<String, Object?>> response = await myDB!.rawQuery(sql);
+    List<Map<String, Object?>> response = await myDB!.rawQuery(sql, args);
     return response;
   }
 
   //Insert data into the database
-  Future<int> insertData(String sql) async {
+  Future<int> insertData(String sql, List<Object?>? args) async {
     Database? myDB = await db;
-    int response = await myDB!.rawInsert(sql);
+    int response = await myDB!.rawInsert(sql, args);
     return response;
   }
 
   //Update data in the database
-  Future<int> updateData(String sql) async {
+  Future<int> updateData(String sql, List<Object?>? args) async {
     Database? myDB = await db;
-    int response = await myDB!.rawUpdate(sql);
+    int response = await myDB!.rawUpdate(sql, args);
     return response;
   }
 
   //Delete data from the database
-  Future<int> deleteData(String sql) async {
+  Future<int> deleteData(String sql, List<Object?>? args) async {
     Database? myDB = await db;
-    int response = await myDB!.rawDelete(sql);
+    int response = await myDB!.rawDelete(sql, args);
     return response;
   }
 

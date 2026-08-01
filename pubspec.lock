@@ -75,19 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  get_x:
+  get:
     dependency: "direct main"
     description:
-      name: get_x
-      sha256: d54a72282b08aad740ba9886b446d546f8028a2d55bfb0c478b4c425d4ab5617
+      name: get
+      sha256: "5ed34a7925b85336e15d472cc4cfe7d9ebf4ab8e8b9f688585bf6b50f4c3d79a"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "4.7.3"
   http:
     dependency: "direct main"
     description:
@@ -136,6 +131,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
+  lucide_icons:
+    dependency: "direct main"
+    description:
+      name: lucide_icons
+      sha256: ad24d0fd65707e48add30bebada7d90bff2a1bba0a72d6e9b19d44246b0e83c4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.257.0"
   matcher:
     dependency: transitive
     description:

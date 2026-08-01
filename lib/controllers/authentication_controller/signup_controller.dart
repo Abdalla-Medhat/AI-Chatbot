@@ -1,32 +1,33 @@
 import 'package:ai_chatbot_colab/services/db_service.dart';
-import 'package:get_x/get.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class LoginController extends GetxController {
+class SignUpController extends GetxController {
+  // Instance of the SQLData class to begin interacting with the database
   SQLData sqlData = SQLData();
 
-  /// Form Key
+  // Key for the Form
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  // Text Editing Controllers
+  // TextEditingControllers for the TextFields
   late TextEditingController emailController;
   late TextEditingController passwordController;
-  // Focus Nodes
+  late TextEditingController confirmPassController;
+  // FocusNodes for the TextFields
   late FocusNode emailFocusNode;
   late FocusNode passwordFocusNode;
-  // Booleans
+  late FocusNode confirmPassFocusNode;
+
   bool isEmailFocused = false;
   bool isPassFocused = false;
+  bool isConfirmPassFocused = false;
   bool isPasswordVisible = false;
-
-  void passIconVisibility() {
-    isPasswordVisible = !isPasswordVisible;
-    update();
-  }
+  bool isConfirmPassVisible = false;
 
   /// Email Validation using RegExp
   bool emailRegExp(String email) {
     return RegExp(
       r'^[a-z0-9]([a-z0-9_%+\-]|\.(?!\.))*[a-z0-9]@[a-z0-9][a-z0-9\-]*(\.[a-z0-9\-]+)*\.[a-z]{2,}$',
+      caseSensitive: false,
     ).hasMatch(email);
   }
 
@@ -53,37 +54,33 @@ class LoginController extends GetxController {
     });
   }
 
+  /// Password Visibility function
+  void passIconVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+    update();
+  }
+
+  /// Confirm Password Visibility
+  void confirmPassIconVisibility() {
+    isConfirmPassVisible = !isConfirmPassVisible;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-
-    // Listen to the focus changes To change the elevation in the TextField
+    confirmPassController = TextEditingController();
 
     emailFocusNode = FocusNode();
     passwordFocusNode = FocusNode();
+    confirmPassFocusNode = FocusNode();
+
+    // Listen to the focus changes To change the elevation in the TextField
     setupfocus(emailFocusNode, (val) => isEmailFocused = val);
     setupfocus(passwordFocusNode, (val) => isPassFocused = val);
-  }
-
-  ///Checking Email function to check if the email is already exists in the database or not
-  Future<String?> checkAuthentication(String email, String password) async {
-    List data = await sqlData.readData(
-      "SELECT * from Users WHERE EMAIL='$email' ",
-    );
-    if (data.isEmpty) {
-      return "The account does not exist";
-    }
-    if (data.isNotEmpty) {
-      if (data[0]['EMAIL'] == email && data[0]['PASSWORD'] == password) {
-        return "Operation Successfully Completed";
-      } else {
-        return "Incorrect password";
-      }
-    }
-
-    return null;
+    setupfocus(confirmPassFocusNode, (val) => isConfirmPassFocused = val);
   }
 
   @override
@@ -92,7 +89,32 @@ class LoginController extends GetxController {
     // Clear the memory.
     emailController.dispose();
     passwordController.dispose();
+    confirmPassController.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
+    confirmPassFocusNode.dispose();
+  }
+
+  ///Checking Email function to check if the email is already exists in the database or not
+  Future<String?> checkEmail(String email) async {
+    List data = await sqlData.readData(
+      "SELECT EMAIL FROM USERS WHERE EMAIL=?",
+      [email],
+    );
+
+    if (data.isNotEmpty) {
+      return "This Email is already exists.";
+    }
+
+    return null;
+  }
+
+  /// Adding User to the database
+  Future addingUser(String email, String password) async {
+    int response = await sqlData.insertData(
+      "INSERT INTO USERS (EMAIL, PASSWORD, IS_LOGGED_IN) VALUES (?, ?, 1)",
+      [email, password],
+    );
+    return response;
   }
 }

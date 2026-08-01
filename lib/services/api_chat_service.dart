@@ -1,23 +1,33 @@
 import "package:http/http.dart";
 import "dart:convert";
+import "dart:io";
 
 class APIChatService {
   //attention: don't forget to change the base url before uploading the file to github.
-  String baseUrl = "http://example.com";
+  String baseUrl = "SERVER_URL"; // Replace with your server URL
 
   ///Sending message function
   Future<String> sendMessage(String message) async {
     Uri url = Uri.parse("$baseUrl/chat");
-    Response response = await post(
-      url,
-      body: jsonEncode({"message": message}),
-      headers: {"Content-Type": "application/json"},
-    );
-    final data = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      return data["response"];
-    } else {
-      throw Exception(data["error"]);
+    try {
+      Response response = await post(
+        url,
+        body: jsonEncode({"message": message}),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data["response"];
+      } else {
+        print("Server error: ======>>${response.statusCode}");
+        throw Exception("Unable to connect to server");
+      }
+    } on SocketException {
+      throw Exception("No Internet connection");
+    } on FormatException {
+      throw Exception("Bad response format");
+    } catch (e) {
+      throw Exception("Unexpected error: =======>>>$e");
     }
   }
 }
