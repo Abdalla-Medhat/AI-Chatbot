@@ -129,6 +129,8 @@ class AppThemes {
           onInverseSurface: DarkColors.inverseOnSurface,
           inversePrimary: DarkColors.inversePrimary,
           surfaceTint: DarkColors.surfaceTint,
+          surfaceContainerLow: DarkColors.surfaceContainerLow,
+          surfaceContainerLowest: DarkColors.surfaceContainerLowest,
         ),
   );
 }

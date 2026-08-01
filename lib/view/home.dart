@@ -497,15 +497,17 @@ class Home extends StatelessWidget {
                                       ),
                                 ),
                                 SizedBox(height: 10),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  """
-            Start a conversation with your AI 
-            assistant for brainstorming, coding, 
-            or just a chat.""",
-                                  style: theme.textTheme.bodyLarge!.copyWith(
-                                    color: theme.colorScheme.onSurfaceVariant
-                                        .withAlpha(220),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: Sizes.containerMargin,
+                                  ),
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    "Start a conversation with your AI assistant for brainstorming, coding, or just a chat.",
+                                    style: theme.textTheme.bodyLarge!.copyWith(
+                                      color: theme.colorScheme.onSurfaceVariant
+                                          .withAlpha(220),
+                                    ),
                                   ),
                                 ),
                               ],

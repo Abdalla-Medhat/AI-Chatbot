@@ -6,7 +6,7 @@ class DarkColors {
   static const Color surface = Color(0xff111415);
   static const Color surfaceDim = Color(0xff111415);
   static const Color surfaceBright = Color(0xff222526);
-  static const Color surfaceContainerLowest = Color(0xff090b0c);
+  static const Color surfaceContainerLowest = Color.fromARGB(255, 44, 70, 92);
   static const Color surfaceContainerLow = Color(0xff191c1d);
   static const Color surfaceContainer = Color(0xff1d2021);
   static const Color surfaceContainerHigh = Color(0xff282a2b);
