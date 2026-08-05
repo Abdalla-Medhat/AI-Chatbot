@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,24 +9,21 @@ class Settings extends StatelessWidget {
   Settings({super.key});
 
   final SettingsController settingsController = Get.put(SettingsController());
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Get.theme.colorScheme.surface.withAlpha(204),
-        title: Text(
-          "Settings",
-          style: Get.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.w600,
-            //is dark
-            color: Get.isDarkMode
-                ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onSurface,
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+            child: Container(),
           ),
         ),
+
+        title: Text("Settings"),
         iconTheme: IconThemeData(color: Get.theme.colorScheme.primary),
       ),
       body: ListView(
@@ -54,7 +52,12 @@ class Settings extends StatelessWidget {
                 tileColor: Get.theme.colorScheme.surfaceContainerLowest,
                 splashColor: Get.theme.colorScheme.outlineVariant,
                 enabled: true,
-                onTap: () {},
+                onTap: () async {
+                  final result = await Get.toNamed("/email_update");
+                  if (result != null && result) {
+                    await settingsController.loadUserEmail();
+                  }
+                },
 
                 title: Text(
                   "Email",
@@ -63,10 +66,12 @@ class Settings extends StatelessWidget {
                     color: Get.theme.colorScheme.onSurface,
                   ),
                 ),
-                subtitle: Text(
-                  "alex.design@example.com",
-                  style: Get.textTheme.bodyLarge!.copyWith(
-                    color: Get.theme.colorScheme.outline.withAlpha(220),
+                subtitle: GetBuilder<SettingsController>(
+                  builder: (controller) => Text(
+                    controller.userEmail,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      color: theme.colorScheme.outline.withAlpha(220),
+                    ),
                   ),
                 ),
                 trailing: Icon(
@@ -92,7 +97,9 @@ class Settings extends StatelessWidget {
                 tileColor: Get.theme.colorScheme.surfaceContainerLowest,
                 splashColor: Get.theme.colorScheme.outlineVariant,
                 enabled: true,
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed("/password_update");
+                },
 
                 title: Text(
                   "Password Change",
@@ -136,7 +143,6 @@ class Settings extends StatelessWidget {
             width: double.infinity,
             height: 100,
             child: GetBuilder<SettingsController>(
-              init: settingsController,
               builder: (controller) => Material(
                 child: ListTile(
                   contentPadding: EdgeInsetsDirectional.symmetric(
@@ -235,7 +241,9 @@ class Settings extends StatelessWidget {
                 tileColor: theme.colorScheme.surfaceContainerLowest,
                 splashColor: theme.colorScheme.outlineVariant,
                 enabled: true,
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed("/privacy_policy");
+                },
 
                 title: Text(
                   "Privacy policy",

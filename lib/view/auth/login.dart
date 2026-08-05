@@ -10,6 +10,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     double width = MediaQuery.of(context).size.width;
     bool portrait = Get.context!.orientation == Orientation.portrait;
     return Scaffold(
@@ -110,6 +111,9 @@ class Login extends StatelessWidget {
                       child: GetBuilder<LoginController>(
                         builder: (controller) {
                           return TextFormField(
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              color: Color(0xff191c1d).withAlpha(220),
+                            ),
                             focusNode: controller.emailFocusNode,
                             controller: controller.emailController,
                             validator: (value) {
@@ -167,8 +171,11 @@ class Login extends StatelessWidget {
                     child: GetBuilder<LoginController>(
                       builder: (controller) {
                         return TextFormField(
+                          style: theme.textTheme.bodyLarge!.copyWith(
+                            color: Color(0xff191c1d).withAlpha(220),
+                          ),
                           focusNode: controller.passwordFocusNode,
-                          controller: loginController.passwordController,
+                          controller: controller.passwordController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter the password';

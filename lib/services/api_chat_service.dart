@@ -4,7 +4,7 @@ import "dart:io";
 
 class APIChatService {
   //attention: don't forget to change the base url before uploading the file to github.
-  String baseUrl = "SERVER_URL"; // Replace with your server URL
+  String baseUrl = "server url"; // Replace with your server URL
 
   ///Sending message function
   Future<String> sendMessage(String message) async {

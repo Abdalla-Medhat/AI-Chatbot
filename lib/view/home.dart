@@ -24,7 +24,7 @@ class Home extends StatelessWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          backgroundColor: theme.colorScheme.surface,
+          // backgroundColor: theme.colorScheme.surface,
           appBar: AppBar(
             // Adding blur effect
             flexibleSpace: ClipRect(
@@ -33,8 +33,6 @@ class Home extends StatelessWidget {
                 child: Container(),
               ),
             ),
-            backgroundColor: theme.colorScheme.surface.withAlpha(204),
-            automaticallyImplyLeading: false,
             actions: [
               IconButton(
                 padding: EdgeInsets.symmetric(horizontal: isPortrait ? 10 : 5),

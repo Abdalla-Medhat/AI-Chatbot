@@ -20,6 +20,7 @@ class SignUpController extends GetxController {
   bool isEmailFocused = false;
   bool isPassFocused = false;
   bool isConfirmPassFocused = false;
+
   bool isPasswordVisible = false;
   bool isConfirmPassVisible = false;
 

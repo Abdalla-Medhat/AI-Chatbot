@@ -70,8 +70,19 @@ class AppThemes {
       hintStyle: AppTextStyles.textTheme.bodyLarge!.copyWith(
         color: LightColors.outlineVariant.withAlpha(200),
       ),
-      prefixIconColor: LightColors.outlineVariant.withAlpha(200),
-      suffixIconColor: LightColors.outlineVariant.withAlpha(200),
+      prefixIconColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.focused)) {
+          return LightColors.primary.withAlpha(175);
+        }
+        return LightColors.outlineVariant.withAlpha(220);
+      }),
+
+      suffixIconColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.focused)) {
+          return LightColors.primary.withAlpha(175);
+        }
+        return LightColors.outlineVariant.withAlpha(220);
+      }),
       filled: true,
       fillColor: WidgetStateColor.resolveWith((state) {
         if (state.contains(WidgetState.focused)) {
@@ -88,6 +99,17 @@ class AppThemes {
         foregroundColor: LightColors.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
+    ),
+    // AppBar Theme
+    appBarTheme: AppBarTheme(
+      foregroundColor: LightColors.primary,
+      backgroundColor: LightColors.surface.withAlpha(204),
+      titleTextStyle: AppTextStyles.textTheme.titleLarge!.copyWith(
+        color: LightColors.primary,
+        fontWeight: FontWeight.w600,
+      ),
+      iconTheme: IconThemeData(color: LightColors.primary),
+      elevation: 0,
     ),
   );
 
@@ -132,5 +154,74 @@ class AppThemes {
           surfaceContainerLow: DarkColors.surfaceContainerLow,
           surfaceContainerLowest: DarkColors.surfaceContainerLowest,
         ),
+    // AppBar Theme
+    appBarTheme: AppBarTheme(
+      foregroundColor: DarkColors.primary,
+      backgroundColor: DarkColors.surface.withAlpha(204),
+      titleTextStyle: AppTextStyles.textTheme.titleLarge!.copyWith(
+        color: DarkColors.primary,
+        fontWeight: FontWeight.w600,
+      ),
+      iconTheme: IconThemeData(color: DarkColors.primary),
+      elevation: 0,
+    ),
+
+    // Buttons Theme
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: DarkColors.primary,
+        foregroundColor: DarkColors.onPrimary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 1,
+          color: DarkColors.outlineVariant.withAlpha(51),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 1,
+          color: DarkColors.primary.withAlpha(51),
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(width: 1, color: DarkColors.error.withAlpha(51)),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(width: 1, color: DarkColors.error.withAlpha(51)),
+      ),
+      hintStyle: AppTextStyles.textTheme.bodyLarge!.copyWith(
+        color: DarkColors.primaryFixedDim.withAlpha(200),
+      ),
+      prefixIconColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.focused)) {
+          return DarkColors.onPrimaryFixedVariant.withAlpha(200);
+        }
+        return DarkColors.primaryFixedDim.withAlpha(200);
+      }),
+      suffixIconColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.focused)) {
+          return DarkColors.onPrimaryFixedVariant.withAlpha(200);
+        }
+        return DarkColors.primaryFixedDim.withAlpha(200);
+      }),
+      filled: true,
+      fillColor: WidgetStateColor.resolveWith((state) {
+        if (state.contains(WidgetState.focused)) {
+          return DarkColors.onPrimaryContainer;
+          // Color(0xffEAF4FF);
+        }
+        return DarkColors.surfaceContainerLowest;
+      }),
+    ),
   );
 }

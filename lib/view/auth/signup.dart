@@ -73,7 +73,7 @@ with privacy at the core.""",
                   ),
                 ),
               ),
-              // Email Section ====================>
+              // Email Section
               Padding(
                 padding: const EdgeInsets.only(bottom: 5.0),
                 child: Column(
@@ -106,10 +106,13 @@ with privacy at the core.""",
                             ? width * 0.1
                             : width * 0.3,
                       ),
-                      // Email TextField ====================>
+                      // Email TextField
                       child: GetBuilder<SignUpController>(
                         builder: (controller) {
                           return TextFormField(
+                            style: Get.textTheme.bodyLarge!.copyWith(
+                              color: Color(0xff191c1d).withAlpha(220),
+                            ),
                             focusNode: controller.emailFocusNode,
                             controller: controller.emailController,
                             validator: (value) {
@@ -136,7 +139,7 @@ with privacy at the core.""",
                   ],
                 ),
               ),
-              // Password section =====================>
+              // Password section
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -172,6 +175,9 @@ with privacy at the core.""",
                     child: GetBuilder<SignUpController>(
                       builder: (controller) {
                         return TextFormField(
+                          style: Get.textTheme.bodyLarge!.copyWith(
+                            color: Color(0xff191c1d).withAlpha(220),
+                          ),
                           focusNode: controller.passwordFocusNode,
                           controller: controller.passwordController,
                           validator: (value) {
@@ -247,6 +253,9 @@ with privacy at the core.""",
                       builder: (controller) {
                         // Confirmation Password TextFormField
                         return TextFormField(
+                          style: Get.textTheme.bodyLarge!.copyWith(
+                            color: Color(0xff191c1d).withAlpha(220),
+                          ),
                           focusNode: controller.confirmPassFocusNode,
                           controller: controller.confirmPassController,
                           validator: (value) {

@@ -1,6 +1,9 @@
 import 'package:ai_chatbot_colab/middleware/auth_middleware.dart';
 import 'package:ai_chatbot_colab/view/auth/signup.dart';
+import 'package:ai_chatbot_colab/view/privacy_policy.dart';
 import 'package:ai_chatbot_colab/view/settings.dart';
+import 'package:ai_chatbot_colab/view/update_auth/email_update.dart';
+import 'package:ai_chatbot_colab/view/update_auth/password_update.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_chatbot_colab/view/home.dart';
 import 'package:ai_chatbot_colab/view/auth/login.dart';
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/home", page: () => Home()),
         GetPage(name: "/sign_up", page: () => SignUp()),
         GetPage(name: "/settings", page: () => Settings()),
+        GetPage(name: "/email_update", page: () => EmailUpdate()),
+        GetPage(name: "/password_update", page: () => PasswordUpdate()),
+        GetPage(name: "/privacy_policy", page: () => PrivacyPolicy()),
       ],
     );
   }
