@@ -22,9 +22,18 @@ class Settings extends StatelessWidget {
             child: Container(),
           ),
         ),
-
         title: Text("Settings"),
         iconTheme: IconThemeData(color: Get.theme.colorScheme.primary),
+        leading: IconButton(
+          icon: Icon(LucideIcons.arrowLeft),
+          onPressed: () async {
+            if (settingsController.deletedData) {
+              Get.back(result: true);
+            } else {
+              Get.back(result: false);
+            }
+          },
+        ),
       ),
       body: ListView(
         children: [
@@ -271,6 +280,8 @@ class Settings extends StatelessWidget {
               ),
             ),
           ),
+
+          // Show a confirmation dialog
           SizedBox(
             width: double.infinity,
             height: 100,
@@ -282,7 +293,95 @@ class Settings extends StatelessWidget {
                 tileColor: Get.theme.colorScheme.surfaceContainerLowest,
                 splashColor: Get.theme.colorScheme.outlineVariant,
                 enabled: true,
-                onTap: () {},
+                onTap: () {
+                  Get.dialog(
+                    AlertDialog(
+                      scrollable: true,
+                      content: Padding(
+                        padding: const EdgeInsets.all(Sizes.md),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Icon(
+                                LucideIcons.database,
+                                size: Sizes.xl,
+                                color: theme.colorScheme.error.withAlpha(230),
+                              ),
+                            ),
+                            SizedBox(height: Sizes.sectionPadding),
+                            Text(
+                              "Clear Local Database",
+                              style: theme.textTheme.bodyLarge!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: theme.colorScheme.onSurface.withAlpha(
+                                  220,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: Sizes.sectionPadding),
+                            Text(
+                              "This will permanently delete all locally stored conversations and cached messages from this device.",
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.labelLarge!.copyWith(
+                                color: theme.colorScheme.outline,
+                              ),
+                            ),
+                            SizedBox(height: Sizes.sectionPadding),
+                            Text(
+                              "This action cannot be undone.",
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.labelLarge!.copyWith(
+                                color: theme.colorScheme.outline,
+                              ),
+                            ),
+                            SizedBox(height: Sizes.sectionPadding),
+                            SizedBox(
+                              width: double.infinity,
+                              height: Sizes.xl * 2,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: theme.colorScheme.error,
+                                ),
+                                onPressed: () async {
+                                  print(
+                                    "====> clearing the data button pressed",
+                                  );
+                                  int result = await settingsController
+                                      .clearUserChating();
+                                  if (result > 0) {
+                                    settingsController.deletedData = true;
+                                    print("====> supposed the data is deleted");
+                                  }
+                                  Get.back();
+                                },
+                                child: Text(
+                                  "Clear Database",
+                                  style: theme.textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: theme.colorScheme.onPrimary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: Sizes.sectionPadding),
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text(
+                                "Cancel",
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: theme.colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
 
                 title: Text(
                   "Clear Local Database",

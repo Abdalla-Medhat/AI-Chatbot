@@ -38,8 +38,17 @@ class Home extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: isPortrait ? 10 : 5),
 
                 icon: Icon(Icons.settings, color: theme.colorScheme.outline),
-                onPressed: () {
-                  Get.toNamed("/settings");
+                onPressed: () async {
+                  final result = await Get.toNamed('/settings');
+                  if (result == true) {
+                    homeController.previousChatsSessions.clear();
+                    homeController.currentSession.clear();
+                    homeController.startChat = false;
+                    homeController.chatId = null;
+                    homeController.chatController.clear();
+                    homeController.update();
+                    homeController.readUserData();
+                  }
                 },
                 iconSize: 24,
               ),
@@ -127,7 +136,16 @@ class Home extends StatelessWidget {
                     onSelected: (value) async {
                       if (value == "profile") {}
                       if (value == "settings") {
-                        Get.toNamed("/settings");
+                        final result = await Get.toNamed('/settings');
+                        if (result == true) {
+                          controller.previousChatsSessions.clear();
+                          controller.currentSession.clear();
+                          controller.startChat = false;
+                          controller.chatId = null;
+                          controller.chatController.clear();
+                          controller.update();
+                          controller.readUserData();
+                        }
                       }
                       if (value == "logout") {
                         await controller.logout();
@@ -341,7 +359,17 @@ class Home extends StatelessWidget {
                         right: 70,
                       ),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          final result = await Get.toNamed('/settings');
+                          if (result == true) {
+                            controller.previousChatsSessions.clear();
+                            controller.currentSession.clear();
+                            controller.startChat = false;
+                            controller.chatId = null;
+                            controller.chatController.clear();
+                            controller.update();
+                          }
+                        },
                         child: Row(
                           children: [
                             Icon(
