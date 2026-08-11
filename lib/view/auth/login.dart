@@ -23,32 +23,15 @@ class Login extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 25),
                 child: Center(
-                  child: Transform.rotate(
-                    angle: 0.25,
-
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: GetPlatform.isDesktop
-                          ? (portrait ? 70 : 0.55)
-                          : (portrait ? 80 : 65),
-                      width: GetPlatform.isDesktop
-                          ? (portrait ? 70 : 0.55)
-                          : (portrait ? 80 : 65),
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(27),
-                      ),
-                      child: Transform.rotate(
-                        angle: -0.25,
-                        child: Image.asset(
-                          "assets/images/white_chat_icon.png",
-                          fit: BoxFit.contain,
-                          height: GetPlatform.isDesktop
-                              ? (portrait ? 50 : 40)
-                              : portrait
-                              ? 40
-                              : 30,
-                        ),
+                  child: TweenAnimationBuilder(
+                    tween: Tween(begin: 0.0, end: 2 * 3.14),
+                    duration: const Duration(seconds: 1),
+                    builder: (context, value, child) => Transform.rotate(
+                      angle: value,
+                      child: Image.asset(
+                        "assets/images/app_icon2.png",
+                        fit: BoxFit.contain,
+                        height: 75,
                       ),
                     ),
                   ),

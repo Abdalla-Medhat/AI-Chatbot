@@ -19,19 +19,29 @@ class HomeController extends GetxController {
     update();
   }
 
+  List<int> previousChatsId = [];
+
   /// Loading the user chats
   Future loadingMessages() async {
     List<Map> allSessions = await sqlData.readData(
-      "SELECT MESSAGE FROM Chats WHERE USER_ID = ?",
+      "SELECT * FROM Chats WHERE USER_ID = ?",
       [userData[0]["ID"]],
     );
-
+    print("allSessions ====> $allSessions");
     if (allSessions.isEmpty) {
       return;
     }
+
     previousChatsSessions.clear();
+    previousChatsId.clear();
     for (var session in allSessions) {
-      previousChatsSessions.add(jsonDecode(session["MESSAGE"]));
+      previousChatsSessions.add(
+        (jsonDecode(session["MESSAGE"]) as List)
+            .map((message) => Map<String, String>.from(message))
+            .toList(),
+      );
+      print("previousChatsSessions ====> $previousChatsSessions");
+      previousChatsId.add(session["ID"]);
     }
 
     print("loadingMessages finished");
@@ -82,13 +92,16 @@ class HomeController extends GetxController {
     update();
   }
 
+  String? userImage;
   Future readUserData() async {
-    print("------> Start Reading User Data function");
     userData = await sqlData.readData(
       "SELECT * FROM USERS WHERE IS_LOGGED_IN = 1",
       [],
     );
     print("User Data------> $userData");
+    if (userData.isNotEmpty) {
+      userImage = userData[0]['IMAGE'];
+    }
     await loadingMessages();
     isLoadingMessages = false;
     update();

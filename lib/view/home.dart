@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,12 @@ class Home extends StatelessWidget {
                       ),
                     ],
                     onSelected: (value) async {
-                      if (value == "profile") {}
+                      if (value == "profile") {
+                        bool result = await Get.toNamed("/profile");
+                        if (result == true) {
+                          await controller.readUserData();
+                        }
+                      }
                       if (value == "settings") {
                         final result = await Get.toNamed('/settings');
                         if (result == true) {
@@ -154,10 +160,9 @@ class Home extends StatelessWidget {
                     },
                     child: CircleAvatar(
                       radius: 20,
-                      backgroundImage: Image.asset(
-                        "assets/images/person.jpg",
-                        fit: BoxFit.cover,
-                      ).image,
+                      backgroundImage: controller.userImage == null
+                          ? AssetImage("assets/images/person.jpg")
+                          : FileImage(File(controller.userImage!)),
                     ),
                   ),
                 ),
@@ -206,12 +211,22 @@ class Home extends StatelessWidget {
                                 SizedBox(
                                   height: 70,
                                   width: 70,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadiusGeometry.circular(
-                                      Sizes.md,
-                                    ),
-                                    child: Image.asset(
-                                      "assets/images/person.jpg",
+                                  child: GetBuilder<HomeController>(
+                                    builder: (controller) => ClipRRect(
+                                      borderRadius:
+                                          BorderRadiusGeometry.circular(
+                                            Sizes.md,
+                                          ),
+                                      child: Image(
+                                        image: controller.userImage == null
+                                            ? const AssetImage(
+                                                "assets/images/person.jpg",
+                                              )
+                                            : FileImage(
+                                                File(controller.userImage!),
+                                              ),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -330,19 +345,40 @@ class Home extends StatelessWidget {
                                           right: isPortrait
                                               ? Sizes.xl
                                               : Sizes.xl * 4,
+
+                                          bottom: Sizes.lg,
                                         ),
 
-                                        child: Text(
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          "${controller.previousChatsSessions[index][0]["Message"]}",
-                                          style: theme.textTheme.bodyLarge!
-                                              .copyWith(
-                                                color: theme
-                                                    .colorScheme
-                                                    .onSurface
-                                                    .withAlpha(220),
-                                              ),
+                                        child: InkWell(
+                                          splashColor: theme.colorScheme.primary
+                                              .withAlpha(50),
+                                          borderRadius: BorderRadius.circular(
+                                            Sizes.md,
+                                          ),
+                                          onTap: () async {
+                                            controller.currentSession.clear();
+                                            controller.currentSession.addAll(
+                                              controller
+                                                  .previousChatsSessions[index],
+                                            );
+                                            controller.chatId = controller
+                                                .previousChatsId[index];
+                                            controller.startChat = true;
+                                            controller.update();
+                                            Get.back();
+                                          },
+                                          child: Text(
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            "${controller.previousChatsSessions[index][0]["Message"]}",
+                                            style: theme.textTheme.bodyLarge!
+                                                .copyWith(
+                                                  color: theme
+                                                      .colorScheme
+                                                      .onSurface
+                                                      .withAlpha(220),
+                                                ),
+                                          ),
                                         ),
                                       );
                                     },
@@ -691,47 +727,6 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-          bottomNavigationBar: GetBuilder<HomeController>(
-            builder: (controller) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(blurRadius: 10, color: Colors.black.withAlpha(20)),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0),
-                ),
-
-                child: BottomNavigationBar(
-                  onTap: (value) => controller.changeBottomIndex(value),
-                  currentIndex: controller.bottomIndex,
-                  iconSize: 24,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/images/chat.png",
-                        // height: Sizes().bottomIconSize(portrait),
-                      ),
-                      label: "Chat",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.history),
-                      label: "History",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.explore),
-                      label: "Explore",
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
         ),
