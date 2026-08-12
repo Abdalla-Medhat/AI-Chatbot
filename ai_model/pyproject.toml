@@ -7,6 +7,7 @@ dependencies = [
     "pydantic",
     "numpy",
     "tensorflow"
+    "scikit-learn"
 ]
 
 [tool.vercel]
