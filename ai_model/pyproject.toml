@@ -1,2 +1,13 @@
+[project]
+name = "ai-chatbot-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "pydantic",
+    "numpy",
+    "tensorflow"
+]
+
 [tool.vercel]
 entrypoint = "API:app"
