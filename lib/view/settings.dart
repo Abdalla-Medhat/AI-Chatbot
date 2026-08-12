@@ -8,7 +8,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 class Settings extends StatelessWidget {
   Settings({super.key});
 
-  final SettingsController settingsController = Get.put(SettingsController());
+  final SettingsController settingsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -343,14 +343,10 @@ class Settings extends StatelessWidget {
                                   backgroundColor: theme.colorScheme.error,
                                 ),
                                 onPressed: () async {
-                                  print(
-                                    "====> clearing the data button pressed",
-                                  );
                                   int result = await settingsController
                                       .clearUserChating();
                                   if (result > 0) {
                                     settingsController.deletedData = true;
-                                    print("====> supposed the data is deleted");
                                   }
                                   Get.back();
                                 },
@@ -412,9 +408,15 @@ class Settings extends StatelessWidget {
           Padding(
             padding: EdgeInsetsGeometry.symmetric(
               vertical: Sizes.sectionPadding * 2,
+              horizontal: Sizes.xl * 5,
             ),
             child: InkWell(
-              onTap: () {},
+              borderRadius: BorderRadius.circular(Sizes.lg),
+              splashColor: theme.colorScheme.error.withAlpha(20),
+              onTap: () async {
+                await settingsController.logout();
+                Get.offAllNamed("/login");
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -1,3 +1,10 @@
+import 'package:ai_chatbot_colab/binding/email_update_binding.dart';
+import 'package:ai_chatbot_colab/binding/home_binding.dart';
+import 'package:ai_chatbot_colab/binding/login_binding.dart';
+import 'package:ai_chatbot_colab/binding/password_update_binding.dart';
+import 'package:ai_chatbot_colab/binding/profile_binding.dart';
+import 'package:ai_chatbot_colab/binding/settings_binding.dart';
+import 'package:ai_chatbot_colab/binding/signup_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_chatbot_colab/middleware/auth_middleware.dart';
 import 'package:ai_chatbot_colab/view/auth/signup.dart';
@@ -40,15 +47,36 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/",
           page: () => Login(),
+          binding: LoginBinding(),
           middlewares: [AuthMidillware()],
         ),
-        GetPage(name: "/home", page: () => Home()),
-        GetPage(name: "/sign_up", page: () => SignUp()),
-        GetPage(name: "/settings", page: () => Settings()),
-        GetPage(name: "/email_update", page: () => EmailUpdate()),
-        GetPage(name: "/password_update", page: () => PasswordUpdate()),
+        GetPage(name: "/home", page: () => Home(), binding: HomeBinding()),
+        GetPage(
+          name: "/sign_up",
+          page: () => SignUp(),
+          binding: SignUpBinding(),
+        ),
+        GetPage(
+          name: "/settings",
+          page: () => Settings(),
+          binding: SettingsBinding(),
+        ),
+        GetPage(
+          name: "/email_update",
+          page: () => EmailUpdate(),
+          binding: EmailUpdateBinding(),
+        ),
+        GetPage(
+          name: "/password_update",
+          page: () => PasswordUpdate(),
+          binding: PasswordUpdateBinding(),
+        ),
         GetPage(name: "/privacy_policy", page: () => PrivacyPolicy()),
-        GetPage(name: "/profile", page: () => Profile()),
+        GetPage(
+          name: "/profile",
+          page: () => Profile(),
+          binding: ProfileBinding(),
+        ),
       ],
     );
   }

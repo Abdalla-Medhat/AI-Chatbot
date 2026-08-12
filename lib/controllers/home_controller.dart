@@ -27,7 +27,6 @@ class HomeController extends GetxController {
       "SELECT * FROM Chats WHERE USER_ID = ?",
       [userData[0]["ID"]],
     );
-    print("allSessions ====> $allSessions");
     if (allSessions.isEmpty) {
       return;
     }
@@ -40,11 +39,8 @@ class HomeController extends GetxController {
             .map((message) => Map<String, String>.from(message))
             .toList(),
       );
-      print("previousChatsSessions ====> $previousChatsSessions");
       previousChatsId.add(session["ID"]);
     }
-
-    print("loadingMessages finished");
   }
 
   Future logout() async {
@@ -70,7 +66,6 @@ class HomeController extends GetxController {
       String errorMessage = e.toString().replaceFirst("Exception", "Error");
       currentSession.add({"Sender": "System", "Message": errorMessage});
       update();
-      print("Error occurred: ===>>>$e");
     }
 
     // Store the chat in the database
@@ -98,14 +93,12 @@ class HomeController extends GetxController {
       "SELECT * FROM USERS WHERE IS_LOGGED_IN = 1",
       [],
     );
-    print("User Data------> $userData");
     if (userData.isNotEmpty) {
       userImage = userData[0]['IMAGE'];
     }
     await loadingMessages();
     isLoadingMessages = false;
     update();
-    print("update called");
   }
 
   @override

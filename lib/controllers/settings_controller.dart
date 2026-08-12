@@ -15,8 +15,6 @@ class SettingsController extends GetxController {
     if (data.isNotEmpty) {
       userEmail = data[0]['EMAIL'];
       userId = data[0]['ID'];
-      print("userEmail ====> $userEmail");
-      print("userId ====> $userId");
       update();
     } else {
       return null;
@@ -28,7 +26,6 @@ class SettingsController extends GetxController {
       "DELETE FROM Chats WHERE USER_ID = ?",
       [userId],
     );
-    print("response = $response");
     return response;
   }
 
@@ -43,7 +40,12 @@ class SettingsController extends GetxController {
     isDarkMode = value;
     Get.changeThemeMode(value ? ThemeMode.dark : ThemeMode.light);
     update();
+  }
 
-    // Get.forceAppUpdate();
+  Future logout() async {
+    await sqlData.updateData(
+      "UPDATE USERS SET IS_LOGGED_IN = 0 WHERE IS_LOGGED_IN = 1",
+      [],
+    );
   }
 }

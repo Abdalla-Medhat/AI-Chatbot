@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class Login extends StatelessWidget {
   Login({super.key});
 
-  final LoginController loginController = Get.put(LoginController());
+  final LoginController loginController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class Login extends StatelessWidget {
                           keyboardType: TextInputType.visiblePassword,
 
                           maxLines: 1,
-                          obscureText: loginController.isPasswordVisible,
+                          obscureText: controller.isPasswordVisible,
                           decoration: InputDecoration(
                             hintText: "••••••••",
                             // hintStyle: TextStyle(fontSize: 25),
@@ -179,7 +179,7 @@ class Login extends StatelessWidget {
 
                             suffixIcon: IconButton(
                               icon: Icon(
-                                loginController.isPasswordVisible
+                                controller.isPasswordVisible
                                     ? Icons.visibility_off_rounded
                                     : Icons.visibility_rounded,
                               ),
@@ -215,7 +215,6 @@ class Login extends StatelessWidget {
                             loginController.passwordController.text.trim(),
                           );
                       if (checkData == "Operation Successfully Completed") {
-                        print("Login Successfully ===================>>>");
                         Get.offAllNamed("/home");
                       } else if (checkData == "The account does not exist") {
                         Get.snackbar(

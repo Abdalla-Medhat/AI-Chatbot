@@ -43,8 +43,7 @@ class PasswordUpdateController extends GetxController {
       "UPDATE USERS SET PASSWORD = ? WHERE IS_LOGGED_IN = 1",
       [password],
     );
-    print("====>$response");
-    print("=====>updatePassword called");
+
     return response;
   }
 

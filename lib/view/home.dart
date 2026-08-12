@@ -8,7 +8,7 @@ import 'package:ai_chatbot_colab/controllers/home_controller.dart';
 class Home extends StatelessWidget {
   Home({super.key});
 
-  final HomeController homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);

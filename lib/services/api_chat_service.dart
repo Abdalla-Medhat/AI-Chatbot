@@ -19,7 +19,6 @@ class APIChatService {
         final data = jsonDecode(response.body);
         return data["response"];
       } else {
-        print("Server error: ======>>${response.statusCode}");
         throw Exception("Unable to connect to server");
       }
     } on SocketException {

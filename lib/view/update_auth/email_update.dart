@@ -5,9 +5,7 @@ import 'package:ai_chatbot_colab/controllers/authentication_controller/email_upd
 
 class EmailUpdate extends StatelessWidget {
   EmailUpdate({super.key});
-  final EmailUpdateController emailUpdatecontroller = Get.put(
-    EmailUpdateController(),
-  );
+  final EmailUpdateController emailUpdatecontroller = Get.find();
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);

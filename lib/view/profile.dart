@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:ai_chatbot_colab/controllers/profile_controlle.dart';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 class Profile extends StatelessWidget {
   Profile({super.key});
 
-  final ProfileController profileController = Get.put(ProfileController());
+  final ProfileController profileController = Get.find();
 
   @override
   Widget build(BuildContext context) {

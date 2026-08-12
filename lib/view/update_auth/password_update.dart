@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 
 class PasswordUpdate extends StatelessWidget {
   PasswordUpdate({super.key});
-  final PasswordUpdateController passwordUpdateController = Get.put(
-    PasswordUpdateController(),
-  );
+  final PasswordUpdateController passwordUpdateController = Get.find();
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);

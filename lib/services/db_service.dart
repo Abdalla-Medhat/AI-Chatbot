@@ -48,8 +48,6 @@ class SQLData {
   )
 """);
     await batch.commit();
-
-    print("Database Created Successfully =======================>>");
   }
 
   //onUpgrade the database
@@ -92,6 +90,5 @@ class SQLData {
     String path = await getDatabasesPath();
     String fullPath = join(path, "chatbot.db");
     await deleteDatabase(fullPath);
-    print("Database Deleted Successfully =======================>>");
   }
 }
