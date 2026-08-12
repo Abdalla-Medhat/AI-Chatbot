@@ -6,7 +6,7 @@ dependencies = [
     "fastapi",
     "pydantic",
     "numpy",
-    "tensorflow"
+    "tensorflow",
     "scikit-learn"
 ]
 
