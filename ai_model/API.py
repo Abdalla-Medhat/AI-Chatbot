@@ -5,15 +5,18 @@ import numpy as np
 import pickle as pkl
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
 
 # load
-model = load_model("model.h5")
-tokenizer = pkl.load(open("tokenizer.pkl", "rb"))
-encoder = pkl.load(open("encoder.pkl", "rb"))
+model = load_model(BASE_DIR / "model.h5")
+tokenizer = pkl.load(open(BASE_DIR / "tokenizer.pkl", "rb"))
+encoder = pkl.load(open(BASE_DIR / "encoder.pkl", "rb"))
 
-with open("data.json") as f:
+with open(BASE_DIR / "data.json") as f:
     data = json.load(f)
 
 class Request(BaseModel):
