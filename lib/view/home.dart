@@ -136,7 +136,7 @@ class Home extends StatelessWidget {
                     ],
                     onSelected: (value) async {
                       if (value == "profile") {
-                        bool result = await Get.toNamed("/profile");
+                        final result = await Get.toNamed("/profile");
                         if (result == true) {
                           await controller.readUserData();
                         }

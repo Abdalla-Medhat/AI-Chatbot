@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:ai_chatbot_colab/controllers/profile_controlle.dart';
+import 'package:ai_chatbot_colab/main.dart';
 import 'package:ai_chatbot_colab/utilities/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -644,6 +645,7 @@ class Profile extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () async {
                                 await profileController.deleteAccount();
+                                data = [];
                                 Get.offAllNamed("/");
                               },
                               style: ElevatedButton.styleFrom(
