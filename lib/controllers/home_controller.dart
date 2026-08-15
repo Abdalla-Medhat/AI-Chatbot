@@ -6,6 +6,8 @@ import 'dart:convert';
 
 class HomeController extends GetxController {
   SQLData sqlData = SQLData();
+  bool isLoading = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List userData = [];
   bool startChat = false;
   bool isLoadingMessages = true;
@@ -13,6 +15,7 @@ class HomeController extends GetxController {
   List previousChatsSessions = [];
   int? chatId;
   late TextEditingController chatController;
+
   final List<Map<String, String>> currentSession = [];
   void changeBottomIndex(int index) {
     bottomIndex = index;
@@ -50,21 +53,45 @@ class HomeController extends GetxController {
     );
   }
 
+  String errorMessage = "";
+  String userMessage = "";
+
   /// Chatting function that sends the user message to the API and updates the chat with the bot's response.
   Future<void> chating(String email) async {
-    if (chatController.text.trim().isEmpty) return;
-    String userMessage = chatController.text.trim();
+    if (errorMessage.isEmpty) {
+      userMessage = chatController.text.trim();
+      currentSession.add({"Sender": email, "Message": userMessage});
+    }
 
-    currentSession.add({"Sender": email, "Message": userMessage});
     update();
     chatController.clear();
     try {
       String botResponse = await APIChatService().sendMessage(userMessage);
       currentSession.add({"Sender": "Bot", "Message": botResponse});
+      errorMessage = "";
       update();
     } catch (e) {
-      String errorMessage = e.toString().replaceFirst("Exception", "Error");
-      currentSession.add({"Sender": "System", "Message": errorMessage});
+      errorMessage = e.toString().replaceFirst("Exception: ", "");
+      Get.snackbar(
+        "Error",
+        errorMessage,
+        duration: const Duration(seconds: 3),
+        backgroundColor: Get.theme.colorScheme.errorContainer.withAlpha(150),
+        titleText: Text(
+          "Error",
+          style: Get.textTheme.bodyLarge!.copyWith(
+            color: Get.theme.colorScheme.error,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        messageText: Text(
+          errorMessage,
+          style: Get.textTheme.bodyLarge!.copyWith(
+            color: Get.theme.colorScheme.onSurfaceVariant,
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
       update();
     }
 

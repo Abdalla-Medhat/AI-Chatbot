@@ -273,6 +273,8 @@ class Home extends StatelessWidget {
                                 controller.startChat = false;
                                 controller.chatId = null;
                                 controller.chatController.clear();
+                                controller.errorMessage = "";
+                                controller.formKey.currentState!.reset();
                                 controller.update();
                                 Get.back();
                               },
@@ -364,6 +366,7 @@ class Home extends StatelessWidget {
                                             controller.chatId = controller
                                                 .previousChatsId[index];
                                             controller.startChat = true;
+                                            controller.errorMessage = "";
                                             controller.update();
                                             Get.back();
                                           },
@@ -432,7 +435,19 @@ class Home extends StatelessWidget {
           body: GetBuilder<HomeController>(
             builder: (controller) => Column(
               children: [
-                controller.startChat
+                controller.isLoading
+                    ? Expanded(
+                        child: Center(
+                          child: SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator(
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      )
+                    : controller.startChat
                     ? Expanded(
                         child: Container(
                           margin: EdgeInsets.symmetric(
@@ -695,11 +710,23 @@ class Home extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.multiline,
-                          controller: controller.chatController,
-                          decoration: InputDecoration(
-                            hintText: "Type your message...",
+                        child: Form(
+                          key: controller.formKey,
+                          child: TextFormField(
+                            enabled: controller.errorMessage.isEmpty
+                                ? true
+                                : false,
+                            keyboardType: TextInputType.multiline,
+                            controller: controller.chatController,
+                            decoration: InputDecoration(
+                              hintText: "Type your message...",
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                       ),
@@ -711,17 +738,35 @@ class Home extends StatelessWidget {
                         ),
 
                         onPressed: () async {
-                          //fetch the user message and send it to the API, then update the chat with both the user message and the bot response
-                          if (controller.chatController.text.trim().isEmpty) {
-                            return;
+                          if (controller.errorMessage.isEmpty) {
+                            controller.isLoading = true;
+                            controller.startChat = true;
+                            controller.update();
+                            if (controller.formKey.currentState!.validate()) {
+                              await controller.chating(
+                                await controller.userData[0]['EMAIL'],
+                              );
+                              controller.update();
+                            }
+                            controller.isLoading = false;
+                            controller.update();
+                          } else {
+                            controller.isLoading = true;
+                            controller.update();
+                            await controller.chating(
+                              await controller.userData[0]['EMAIL'],
+                            );
+                            controller.startChat = true;
+                            controller.isLoading = false;
+                            controller.update();
                           }
-                          await controller.chating(
-                            await controller.userData[0]['EMAIL'],
-                          );
-                          controller.startChat = true;
-                          controller.update();
                         },
-                        child: Image.asset("assets/images/arrow.png"),
+                        child: controller.errorMessage.isEmpty
+                            ? Image.asset("assets/images/arrow.png")
+                            : Icon(
+                                Icons.replay_outlined,
+                                color: theme.colorScheme.onPrimary,
+                              ),
                       ),
                     ],
                   ),

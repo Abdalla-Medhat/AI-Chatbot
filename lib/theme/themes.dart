@@ -46,6 +46,13 @@ class AppThemes {
           color: LightColors.outlineVariant.withAlpha(51),
         ),
       ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 1,
+          color: LightColors.outlineVariant.withAlpha(51),
+        ),
+      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(
@@ -60,6 +67,7 @@ class AppThemes {
           color: LightColors.error.withAlpha(51),
         ),
       ),
+
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(
@@ -87,6 +95,10 @@ class AppThemes {
       fillColor: WidgetStateColor.resolveWith((state) {
         if (state.contains(WidgetState.focused)) {
           return Color(0xffEAF4FF);
+        } else if (state.contains(WidgetState.disabled)) {
+          return LightColors.outlineVariant;
+        } else if (state.contains(WidgetState.error)) {
+          return LightColors.errorContainer;
         }
         return LightColors.surfaceContainerLowest;
       }),
