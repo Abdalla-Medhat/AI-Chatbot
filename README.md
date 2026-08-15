@@ -15,6 +15,7 @@
 - 💬 Previous conversations and chat history
 - 👤 Profile page and profile picture management
 - 📷 Set profile picture using the camera or gallery
+- 🔐 Runtime permission handling for camera and internet access
 - 🗑️ Clear stored conversations/data
 - ❌ Complete account deletion
 - 📧 Email and password management
