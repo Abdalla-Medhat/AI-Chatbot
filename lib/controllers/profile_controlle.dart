@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:ai_chatbot_colab/main.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
@@ -68,9 +69,11 @@ class ProfileController extends GetxController {
   String? userName;
   String? userImage;
 
+  List<Map> userData = [];
+
   /// Loading the user data
   Future loadUserData() async {
-    List<Map> userData = await sqlData.readData(
+    userData = await sqlData.readData(
       "SELECT * FROM USERS WHERE IS_LOGGED_IN = 1",
       [],
     );
@@ -86,7 +89,11 @@ class ProfileController extends GetxController {
 
   /// Deleting the user account
   Future deleteAccount() async {
+    int userId = userData[0]['ID'];
+    await sqlData.deleteData("DELETE FROM Chats WHERE USER_ID = ?", [userId]);
     await sqlData.deleteData("DELETE FROM USERS WHERE IS_LOGGED_IN = 1", []);
+    data = [];
+    await sqlData.closeAndResetDB();
   }
 
   @override

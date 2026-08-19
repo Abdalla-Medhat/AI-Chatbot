@@ -326,9 +326,6 @@ with privacy at the core.""",
                         Get.snackbar("Error", "Failed to create an account");
                         return;
                       } else if (response > 0) {
-                        print(
-                          "User Added Successfully =======================>>",
-                        );
                         Get.offAllNamed("/home");
                       }
                     } else {

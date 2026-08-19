@@ -1,3 +1,4 @@
+import 'package:ai_chatbot_colab/main.dart';
 import 'package:ai_chatbot_colab/services/db_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,6 +44,7 @@ class SettingsController extends GetxController {
   }
 
   Future logout() async {
+    data = [];
     await sqlData.updateData(
       "UPDATE USERS SET IS_LOGGED_IN = 0 WHERE IS_LOGGED_IN = 1",
       [],

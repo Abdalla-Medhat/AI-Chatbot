@@ -6,7 +6,7 @@ class SQLData {
   static Database? _db;
   //retrieve the database
   Future<Database?> get db async {
-    if (_db == null) {
+    if (_db == null || !_db!.isOpen) {
       _db = await initializeDB();
       return _db;
     }
@@ -44,7 +44,7 @@ class SQLData {
   `MESSAGE` TEXT NOT NULL,
   `USER_ID` INTEGER NOT NULL,
   `TIMESTAMP` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(`USER_ID`) REFERENCES `USERS`(`ID`)
+  FOREIGN KEY(`USER_ID`) REFERENCES `USERS`(`ID`) ON DELETE CASCADE
   )
 """);
     await batch.commit();
@@ -90,5 +90,13 @@ class SQLData {
     String path = await getDatabasesPath();
     String fullPath = join(path, "chatbot.db");
     await deleteDatabase(fullPath);
+  }
+
+  ///Close the database
+  Future<void> closeAndResetDB() async {
+    if (_db != null) {
+      await _db!.close();
+      _db = null;
+    }
   }
 }

@@ -415,7 +415,8 @@ class Settings extends StatelessWidget {
               splashColor: theme.colorScheme.error.withAlpha(20),
               onTap: () async {
                 await settingsController.logout();
-                Get.offAllNamed("/login");
+                await settingsController.sqlData.closeAndResetDB();
+                Get.offAllNamed("/");
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

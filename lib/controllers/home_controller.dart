@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:ai_chatbot_colab/services/api_chat_service.dart';
 import 'dart:convert';
+import 'package:ai_chatbot_colab/main.dart';
 
 class HomeController extends GetxController {
   SQLData sqlData = SQLData();
@@ -47,6 +48,7 @@ class HomeController extends GetxController {
   }
 
   Future logout() async {
+    data = [];
     await sqlData.updateData(
       "UPDATE USERS SET IS_LOGGED_IN = 0 WHERE IS_LOGGED_IN = 1",
       [],

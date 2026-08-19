@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     bool isPortrait = Get.context!.orientation == Orientation.portrait;
+
     return
     // remeber to delete the PopScope
     PopScope(
@@ -155,7 +156,8 @@ class Home extends StatelessWidget {
                       }
                       if (value == "logout") {
                         await controller.logout();
-                        Get.offNamed("/login");
+                        await homeController.sqlData.closeAndResetDB();
+                        Get.offAllNamed("/");
                       }
                     },
                     child: CircleAvatar(
@@ -627,7 +629,8 @@ class Home extends StatelessWidget {
                                                       .copyWith(
                                                         color: theme
                                                             .colorScheme
-                                                            .onSurface,
+                                                            .onSurface
+                                                            .withAlpha(220),
                                                       )
                                                 : theme.textTheme.bodyLarge!
                                                       .copyWith(
@@ -680,7 +683,8 @@ class Home extends StatelessWidget {
                                                       .copyWith(
                                                         color: theme
                                                             .colorScheme
-                                                            .onSurface,
+                                                            .onSurface
+                                                            .withAlpha(220),
                                                       )
                                                 : theme.textTheme.bodyLarge!
                                                       .copyWith(
@@ -713,6 +717,14 @@ class Home extends StatelessWidget {
                         child: Form(
                           key: controller.formKey,
                           child: TextFormField(
+                            style: Get.isDarkMode
+                                ? theme.textTheme.bodyLarge!.copyWith(
+                                    color: theme.colorScheme.onPrimary,
+                                  )
+                                : theme.textTheme.bodyLarge!.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withAlpha(220),
+                                  ),
                             enabled: controller.errorMessage.isEmpty
                                 ? true
                                 : false,

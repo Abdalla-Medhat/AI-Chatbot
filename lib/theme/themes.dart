@@ -94,6 +94,9 @@ class AppThemes {
       filled: true,
       fillColor: WidgetStateColor.resolveWith((state) {
         if (state.contains(WidgetState.focused)) {
+          if (state.contains(WidgetState.error)) {
+            return LightColors.errorContainer;
+          }
           return Color(0xffEAF4FF);
         } else if (state.contains(WidgetState.disabled)) {
           return LightColors.outlineVariant;
@@ -196,6 +199,13 @@ class AppThemes {
           color: DarkColors.outlineVariant.withAlpha(51),
         ),
       ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 1,
+          color: DarkColors.outlineVariant.withAlpha(51),
+        ),
+      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(
@@ -229,8 +239,15 @@ class AppThemes {
       filled: true,
       fillColor: WidgetStateColor.resolveWith((state) {
         if (state.contains(WidgetState.focused)) {
+          if (state.contains(WidgetState.error)) {
+            return DarkColors.errorContainer.withAlpha(175);
+          }
           return DarkColors.onPrimaryContainer;
           // Color(0xffEAF4FF);
+        } else if (state.contains(WidgetState.error)) {
+          return DarkColors.errorContainer.withAlpha(175);
+        } else if (state.contains(WidgetState.disabled)) {
+          return DarkColors.secondary;
         }
         return DarkColors.surfaceContainerLowest;
       }),
