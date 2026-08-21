@@ -77,7 +77,6 @@ ai_chatbot_colab/
   <img src="assets/images/screen_shots/Screenshot_20260812_043349.png" width="220" alt="Login Screen">
   <img src="assets/images/screen_shots/Screenshot_20260812_043446.png" width="220" alt="Home Screen">
   <img src="assets/images/screen_shots/Screenshot_20260812_043605.png" width="220" alt="Previous Chats">
-  <br/><br/>
   <img src="assets/images/screen_shots/Screenshot_20260812_043609.png" width="220" alt="Settings Screen">
   <img src="assets/images/screen_shots/Screenshot_20260812_043752.png" width="220" alt="Profile Screen">
 </p>
