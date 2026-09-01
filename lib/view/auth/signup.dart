@@ -16,7 +16,7 @@ class SignUp extends StatelessWidget {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(
-          key: signUpController.formKey,
+          key: signUpController.signUpFormKey,
           child: ListView(
             children: [
               Padding(
@@ -309,7 +309,8 @@ with privacy at the core.""",
                 height: GetPlatform.isMobile ? 65 : 75,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (signUpController.formKey.currentState!.validate()) {
+                    if (signUpController.signUpFormKey.currentState!
+                        .validate()) {
                       //check if the email is already exists
                       String? checkEmail = await signUpController.checkEmail(
                         signUpController.emailController.text.trim(),

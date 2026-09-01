@@ -29,15 +29,7 @@ void main() async {
       "SELECT IS_LOGGED_IN FROM USERS WHERE IS_LOGGED_IN = 1",
       [],
     );
-    print("==========================================");
-    print("READ DATA RESULT: $data");
-    print("DATA IS EMPTY? ${data.isEmpty}");
-    print("==========================================");
-  } catch (e) {
-    print("==========================================");
-    print("EXPECTED ERROR (Table/DB clean): $e");
-    print("==========================================");
-  }
+  } catch (e) {}
 
   runApp(const MyApp());
 }

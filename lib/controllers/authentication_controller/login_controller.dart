@@ -6,7 +6,7 @@ class LoginController extends GetxController {
   SQLData sqlData = SQLData();
 
   /// Form Key
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   // Text Editing Controllers
   late TextEditingController emailController;
   late TextEditingController passwordController;

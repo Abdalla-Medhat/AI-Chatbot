@@ -7,7 +7,7 @@ class SignUpController extends GetxController {
   SQLData sqlData = SQLData();
 
   // Key for the Form
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
   // TextEditingControllers for the TextFields
   late TextEditingController emailController;
   late TextEditingController passwordController;
