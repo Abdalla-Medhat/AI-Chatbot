@@ -2,11 +2,35 @@ import "package:ai_chatbot_colab/controllers/authentication_controller/signup_co
 import "package:ai_chatbot_colab/theme/styles.dart";
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
+import 'package:ai_chatbot_colab/utilities/staggerd_animation.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({super.key});
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> with SingleTickerProviderStateMixin {
   final SignUpController signUpController = Get.find();
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,46 +43,128 @@ class SignUp extends StatelessWidget {
           key: signUpController.signUpFormKey,
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 25),
-                child: Center(
-                  child: TweenAnimationBuilder(
-                    tween: Tween(begin: 0.0, end: 2 * 3.14),
-                    duration: const Duration(seconds: 1),
-                    builder: (context, value, child) => Transform.rotate(
-                      angle: value,
-                      child: Image.asset(
-                        "assets/images/app_icon2.png",
-                        fit: BoxFit.contain,
-                        height: 75,
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.0,
+                finish: 0.4,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 25),
+                      child: Center(
+                        child: TweenAnimationBuilder(
+                          tween: Tween(begin: 0.0, end: 2 * 3.14),
+                          duration: const Duration(seconds: 1),
+                          builder: (context, value, child) => Transform.rotate(
+                            angle: value,
+                            child: Image.asset(
+                              "assets/images/app_icon2.png",
+                              fit: BoxFit.contain,
+                              height: 75,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Text(
-                "Join ChatBot",
-                textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge!.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 17),
-                child: Text(
-                  """Experience seamless AI conversations
+                    Text(
+                      "Join ChatBot",
+                      textAlign: TextAlign.center,
+                      style: Get.textTheme.headlineLarge!.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 17),
+                      child: Text(
+                        """Experience seamless AI conversations
 with privacy at the core.""",
-                  textAlign: TextAlign.center,
-                  style: Get.textTheme.bodyLarge!.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withAlpha(220),
-                  ),
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurfaceVariant.withAlpha(220),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               // Email Section
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.1,
+                finish: 0.5,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: GetPlatform.isMobile
+                              ? (portrait ? width * 0.12 : width * 0.18)
+                              : portrait
+                              ? width * 0.12
+                              : width * 0.38,
+                        ),
+                        child: Text(
+                          "EMAIL ADDRESS",
+                          style: Get.textTheme.labelMedium!.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant.withAlpha(200),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: GetPlatform.isMobile
+                              ? (portrait ? width * 0.07 : width * 0.15)
+                              : portrait
+                              ? width * 0.1
+                              : width * 0.3,
+                        ),
+                        // Email TextField
+                        child: GetBuilder<SignUpController>(
+                          builder: (controller) {
+                            return TextFormField(
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                color: Color(0xff191c1d).withAlpha(220),
+                              ),
+                              focusNode: controller.emailFocusNode,
+                              controller: controller.emailController,
+                              validator: (value) {
+                                if (value == null) {
+                                  return "Please enter your email";
+                                } else {
+                                  return controller.isEmailValid(value);
+                                }
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(15),
+
+                                filled: true,
+                                hintText: "name@example.com",
+
+                                prefixIcon: Icon(Icons.email_rounded),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Password section
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.2,
+                finish: 0.6,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -71,7 +177,7 @@ with privacy at the core.""",
                             : width * 0.38,
                       ),
                       child: Text(
-                        "EMAIL ADDRESS",
+                        "PASSWORD",
                         style: Get.textTheme.labelMedium!.copyWith(
                           fontWeight: FontWeight.w900,
                           color: Theme.of(
@@ -89,31 +195,46 @@ with privacy at the core.""",
                             ? width * 0.1
                             : width * 0.3,
                       ),
-                      // Email TextField
+
+                      // Password TextField ==================>
                       child: GetBuilder<SignUpController>(
                         builder: (controller) {
                           return TextFormField(
                             style: Get.textTheme.bodyLarge!.copyWith(
                               color: Color(0xff191c1d).withAlpha(220),
                             ),
-                            focusNode: controller.emailFocusNode,
-                            controller: controller.emailController,
+                            focusNode: controller.passwordFocusNode,
+                            controller: controller.passwordController,
                             validator: (value) {
-                              if (value == null) {
-                                return "Please enter your email";
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the password';
+                              } else if (value.length < 8) {
+                                return "Password must be at least 8 characters long";
                               } else {
-                                return controller.isEmailValid(value);
+                                return null;
                               }
                             },
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.visiblePassword,
                             maxLines: 1,
+                            obscureText: controller.isPasswordVisible,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(15),
-
                               filled: true,
-                              hintText: "name@example.com",
+                              hintText: "••••••••",
 
-                              prefixIcon: Icon(Icons.email_rounded),
+                              prefixIcon: Icon(Icons.lock_rounded),
+
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.isPasswordVisible
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded,
+                                ),
+
+                                onPressed: () {
+                                  controller.passIconVisibility();
+                                },
+                              ),
                             ),
                           );
                         },
@@ -122,282 +243,220 @@ with privacy at the core.""",
                   ],
                 ),
               ),
-              // Password section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: GetPlatform.isMobile
-                          ? (portrait ? width * 0.12 : width * 0.18)
-                          : portrait
-                          ? width * 0.12
-                          : width * 0.38,
-                    ),
-                    child: Text(
-                      "PASSWORD",
-                      style: Get.textTheme.labelMedium!.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurfaceVariant.withAlpha(200),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                    margin: EdgeInsets.symmetric(
-                      horizontal: GetPlatform.isMobile
-                          ? (portrait ? width * 0.07 : width * 0.15)
-                          : portrait
-                          ? width * 0.1
-                          : width * 0.3,
-                    ),
-
-                    // Password TextField ==================>
-                    child: GetBuilder<SignUpController>(
-                      builder: (controller) {
-                        return TextFormField(
-                          style: Get.textTheme.bodyLarge!.copyWith(
-                            color: Color(0xff191c1d).withAlpha(220),
-                          ),
-                          focusNode: controller.passwordFocusNode,
-                          controller: controller.passwordController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter the password';
-                            } else if (value.length < 8) {
-                              return "Password must be at least 8 characters long";
-                            } else {
-                              return null;
-                            }
-                          },
-                          keyboardType: TextInputType.visiblePassword,
-                          maxLines: 1,
-                          obscureText: controller.isPasswordVisible,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(15),
-                            filled: true,
-                            hintText: "••••••••",
-
-                            prefixIcon: Icon(Icons.lock_rounded),
-
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                controller.isPasswordVisible
-                                    ? Icons.visibility_off_rounded
-                                    : Icons.visibility_rounded,
-                              ),
-
-                              onPressed: () {
-                                controller.passIconVisibility();
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
               // Confirmation Section =====================>
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: GetPlatform.isMobile
-                          ? (portrait ? width * 0.12 : width * 0.18)
-                          : portrait
-                          ? width * 0.12
-                          : width * 0.38,
-                    ),
-                    child: Text(
-                      "Confirm Password",
-                      style: Get.textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurfaceVariant.withAlpha(200),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                    margin: EdgeInsets.symmetric(
-                      horizontal: GetPlatform.isMobile
-                          ? (portrait ? width * 0.07 : width * 0.15)
-                          : portrait
-                          ? width * 0.1
-                          : width * 0.3,
-                    ),
-
-                    child: GetBuilder<SignUpController>(
-                      builder: (controller) {
-                        // Confirmation Password TextFormField
-                        return TextFormField(
-                          style: Get.textTheme.bodyLarge!.copyWith(
-                            color: Color(0xff191c1d).withAlpha(220),
-                          ),
-                          focusNode: controller.confirmPassFocusNode,
-                          controller: controller.confirmPassController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter the Password Confirmation';
-                            } else if (value !=
-                                controller.passwordController.text) {
-                              return "Password confirmation doesn't match";
-                            } else {
-                              return null;
-                            }
-                          },
-                          keyboardType: TextInputType.visiblePassword,
-                          maxLines: 1,
-                          obscureText: controller.isConfirmPassVisible,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.all(15),
-                            filled: true,
-                            hintText: "••••••••",
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant.withAlpha(80),
-                            ),
-                            prefixIconConstraints: const BoxConstraints(
-                              minWidth: 40,
-                              minHeight: 40,
-                            ),
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                "assets/images/shield_with_lock.png",
-
-                                height: 10,
-                                width: 10,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                controller.isConfirmPassVisible
-                                    ? Icons.visibility_off_rounded
-                                    : Icons.visibility_rounded,
-                              ),
-
-                              onPressed: () {
-                                controller.confirmPassIconVisibility();
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: GetPlatform.isMobile
-                      ? (portrait ? 20 : 100)
-                      : portrait
-                      ? 50
-                      : 200,
-                  vertical: 30,
-                ),
-                height: GetPlatform.isMobile ? 65 : 75,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (signUpController.signUpFormKey.currentState!
-                        .validate()) {
-                      //check if the email is already exists
-                      String? checkEmail = await signUpController.checkEmail(
-                        signUpController.emailController.text.trim(),
-                      );
-                      if (checkEmail != null) {
-                        Get.snackbar("Error", checkEmail);
-                        return;
-                      }
-                      int response = await signUpController.addingUser(
-                        signUpController.emailController.text.trim(),
-                        signUpController.passwordController.text.trim(),
-                      );
-                      if (response == 0) {
-                        Get.snackbar("Error", "Failed to create an account");
-                        return;
-                      } else if (response > 0) {
-                        Get.offAllNamed("/home");
-                      }
-                    } else {
-                      Get.snackbar("Error", "Please fill all the fields");
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Sign Up",
-                        style: AppTextStyles.textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.3,
+                finish: 0.7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Already have an account?  ",
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.onSurfaceVariant.withAlpha(
-                          175,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: GetPlatform.isMobile
+                            ? (portrait ? width * 0.12 : width * 0.18)
+                            : portrait
+                            ? width * 0.12
+                            : width * 0.38,
+                      ),
+                      child: Text(
+                        "Confirm Password",
+                        style: Get.textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurfaceVariant.withAlpha(200),
                         ),
-                        fontSize: GetPlatform.isMobile ? 17 : 25,
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.offNamed("/");
-                      },
-                      child: Text(
-                        "Login",
-                        style: Get.textTheme.bodyLarge!.copyWith(
-                          color: Get.theme.colorScheme.primary,
-                          fontWeight: FontWeight.w800,
-                        ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: GetPlatform.isMobile
+                            ? (portrait ? width * 0.07 : width * 0.15)
+                            : portrait
+                            ? width * 0.1
+                            : width * 0.3,
+                      ),
+
+                      child: GetBuilder<SignUpController>(
+                        builder: (controller) {
+                          // Confirmation Password TextFormField
+                          return TextFormField(
+                            style: Get.textTheme.bodyLarge!.copyWith(
+                              color: Color(0xff191c1d).withAlpha(220),
+                            ),
+                            focusNode: controller.confirmPassFocusNode,
+                            controller: controller.confirmPassController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter the Password Confirmation';
+                              } else if (value !=
+                                  controller.passwordController.text) {
+                                return "Password confirmation doesn't match";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLines: 1,
+                            obscureText: controller.isConfirmPassVisible,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(15),
+                              filled: true,
+                              hintText: "••••••••",
+                              hintStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant.withAlpha(80),
+                              ),
+                              prefixIconConstraints: const BoxConstraints(
+                                minWidth: 40,
+                                minHeight: 40,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.asset(
+                                  "assets/images/shield_with_lock.png",
+
+                                  height: 10,
+                                  width: 10,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.isConfirmPassVisible
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded,
+                                ),
+
+                                onPressed: () {
+                                  controller.confirmPassIconVisibility();
+                                },
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.4,
+                finish: 0.8,
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: GetPlatform.isMobile
+                        ? (portrait ? 20 : 100)
+                        : portrait
+                        ? 50
+                        : 200,
+                    vertical: 30,
+                  ),
+                  height: GetPlatform.isMobile ? 65 : 75,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (signUpController.signUpFormKey.currentState!
+                          .validate()) {
+                        //check if the email is already exists
+                        String? checkEmail = await signUpController.checkEmail(
+                          signUpController.emailController.text.trim(),
+                        );
+                        if (checkEmail != null) {
+                          Get.snackbar("Error", checkEmail);
+                          return;
+                        }
+                        int response = await signUpController.addingUser(
+                          signUpController.emailController.text.trim(),
+                          signUpController.passwordController.text.trim(),
+                        );
+                        if (response == 0) {
+                          Get.snackbar("Error", "Failed to create an account");
+                          return;
+                        } else if (response > 0) {
+                          Get.offAllNamed("/home");
+                        }
+                      } else {
+                        Get.snackbar("Error", "Please fill all the fields");
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Sign Up",
+                          style: AppTextStyles.textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              StaggerdAnimation(
+                controller: animationController,
+                start: 0.5,
+                finish: 0.9,
+                child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Icon(
-                        Icons.storage,
-                        color: Get.theme.colorScheme.onSurfaceVariant.withAlpha(
-                          80,
-                        ),
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account?  ",
+                            style: TextStyle(
+                              color: Get.theme.colorScheme.onSurfaceVariant
+                                  .withAlpha(175),
+                              fontSize: GetPlatform.isMobile ? 17 : 25,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.offNamed("/");
+                            },
+                            child: Text(
+                              "Login",
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                color: Get.theme.colorScheme.primary,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Icon(
+                              Icons.storage,
+                              color: Get.theme.colorScheme.onSurfaceVariant
+                                  .withAlpha(80),
+                            ),
+                          ),
 
-                    Text(
-                      "Your data is stored locally on this device.",
-                      softWrap: true,
-                      style: Get.textTheme.titleSmall?.copyWith(
-                        color: Get.theme.colorScheme.onSurfaceVariant.withAlpha(
-                          200,
-                        ),
+                          Text(
+                            "Your data is stored locally on this device.",
+                            softWrap: true,
+                            style: Get.textTheme.titleSmall?.copyWith(
+                              color: Get.theme.colorScheme.onSurfaceVariant
+                                  .withAlpha(200),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

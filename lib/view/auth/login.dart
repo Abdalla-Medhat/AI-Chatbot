@@ -2,7 +2,7 @@ import "package:ai_chatbot_colab/controllers/authentication_controller/login_con
 import "package:ai_chatbot_colab/theme/styles.dart";
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:ai_chatbot_colab/utilities/staggerda_animation.dart';
+import 'package:ai_chatbot_colab/utilities/staggerd_animation.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
@@ -14,21 +14,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   final LoginController loginController = Get.find();
   late AnimationController animationController;
-  late Animation titleOpacity;
-  late Animation titlePosition;
-  Animation<double> createAnimation(
-    double begin,
-    double end,
-    double start,
-    double finish,
-  ) {
-    return Tween<double>(begin: begin, end: end).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Interval(start, finish, curve: Curves.easeInOut),
-      ),
-    );
-  }
 
   @override
   void initState() {
