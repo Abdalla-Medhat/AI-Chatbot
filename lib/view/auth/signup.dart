@@ -363,7 +363,7 @@ with privacy at the core.""",
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed("/");
+                        Get.offNamed("/");
                       },
                       child: Text(
                         "Login",
