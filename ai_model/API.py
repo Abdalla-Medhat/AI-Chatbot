@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import json
 import numpy as np
@@ -6,10 +6,13 @@ import pickle as pkl
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
+
+API_KEY = os.getenv("API_KEY")
 
 # load
 model = load_model(BASE_DIR / "model.h5")
@@ -37,5 +40,8 @@ def chat(user_message):
     return "I don't understand."
 
 @app.post("/chat")
-def chat_api(req: Request):
+def chat_api(req: Request, x_api_key: str = Header(...)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API Key")
+    
     return {"response": chat(req.message)}
