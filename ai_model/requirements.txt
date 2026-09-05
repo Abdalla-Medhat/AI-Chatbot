@@ -3,3 +3,4 @@ pydantic
 numpy
 tensorflow
 scikit-learn
+upstash-redis
