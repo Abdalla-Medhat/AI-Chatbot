@@ -85,10 +85,3 @@ def chat_api(
         )
 
     return {"response": chat(req.message)}
-
-@app.get("/redis-test")
-def redis_test():
-    redis.set("test", "Hello Redis")
-    value = redis.get("test")
-
-    return {"redis": value}

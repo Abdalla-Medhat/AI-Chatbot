@@ -12,16 +12,11 @@ class HomeController extends GetxController {
   List userData = [];
   bool startChat = false;
   bool isLoadingMessages = true;
-  int bottomIndex = 0;
   List previousChatsSessions = [];
   int? chatId;
   late TextEditingController chatController;
 
   final List<Map<String, String>> currentSession = [];
-  void changeBottomIndex(int index) {
-    bottomIndex = index;
-    update();
-  }
 
   List<int> previousChatsId = [];
 
@@ -77,7 +72,7 @@ class HomeController extends GetxController {
       Get.snackbar(
         "Error",
         errorMessage,
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 2),
         backgroundColor: Get.theme.colorScheme.errorContainer.withAlpha(150),
         titleText: Text(
           "Error",
