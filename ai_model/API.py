@@ -7,12 +7,19 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from pathlib import Path
 import os
+from upstash_redis import Redis
 
 BASE_DIR = Path(__file__).resolve().parent
 
 app = FastAPI()
 
 API_KEY = os.getenv("API_KEY")
+
+redis = Redis(
+    url=os.getenv("UPSTASH_REDIS_REST_URL"),
+    token=os.getenv("UPSTASH_REDIS_REST_TOKEN"),
+)
+
 
 # load
 model = load_model(BASE_DIR / "model.h5")
@@ -45,3 +52,10 @@ def chat_api(req: Request, x_api_key: str = Header(...)):
         raise HTTPException(status_code=401, detail="Invalid API Key")
     
     return {"response": chat(req.message)}
+
+@app.get("/redis-test")
+def redis_test():
+    redis.set("test", "Hello Redis")
+    value = redis.get("test")
+
+    return {"redis": value}
