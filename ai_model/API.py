@@ -72,14 +72,17 @@ def chat_api(
     else:
         client_ip = request.client.host
 
+    if x_api_key != API_KEY:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid API Key"
+        )
+
     if not check_rate_limit(client_ip):
         raise HTTPException(
             status_code=429,
             detail="Too many requests. Please try again later."
         )
-
-    if x_api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="Invalid API Key")
 
     return {"response": chat(req.message)}
 
