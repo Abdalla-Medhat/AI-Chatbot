@@ -42,7 +42,7 @@ encoder = pkl.load(open(BASE_DIR / "encoder.pkl", "rb"))
 with open(BASE_DIR / "data.json") as f:
     data = json.load(f)
 
-class Request(BaseModel):
+class ChatRequest(BaseModel):
     message: str
 
 def chat(user_message):
@@ -60,13 +60,17 @@ def chat(user_message):
     return "I don't understand."
 
 @app.post("/chat")
-def chat_api(req: Request, x_api_key: str = Header(...)):
-    forwarded_for = req.headers.get("x-forwarded-for")
+def chat_api(
+    request: Request,
+    req: ChatRequest,
+    x_api_key: str = Header(...)
+):
+    forwarded_for = request.headers.get("x-forwarded-for")
 
     if forwarded_for:
         client_ip = forwarded_for.split(",")[0].strip()
     else:
-        client_ip = req.client.host
+        client_ip = request.client.host
 
     if not check_rate_limit(client_ip):
         raise HTTPException(
