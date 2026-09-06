@@ -20,6 +20,19 @@ redis = Redis(
     token=os.getenv("UPSTASH_REDIS_REST_TOKEN"),
 )
 
+RATE_LIMIT = 10
+RATE_WINDOW = 60
+
+
+def check_rate_limit(ip: str):
+    key = f"rate_limit:{ip}"
+
+    current_count = redis.incr(key)
+
+    if current_count == 1:
+        redis.expire(key, RATE_WINDOW)
+
+    return current_count <= RATE_LIMIT
 
 # load
 model = load_model(BASE_DIR / "model.h5")
