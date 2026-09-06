@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 import json
 import numpy as np
@@ -61,9 +61,22 @@ def chat(user_message):
 
 @app.post("/chat")
 def chat_api(req: Request, x_api_key: str = Header(...)):
+    forwarded_for = req.headers.get("x-forwarded-for")
+
+    if forwarded_for:
+        client_ip = forwarded_for.split(",")[0].strip()
+    else:
+        client_ip = req.client.host
+
+    if not check_rate_limit(client_ip):
+        raise HTTPException(
+            status_code=429,
+            detail="Too many requests. Please try again later."
+        )
+
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API Key")
-    
+
     return {"response": chat(req.message)}
 
 @app.get("/redis-test")
