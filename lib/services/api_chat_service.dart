@@ -18,11 +18,13 @@ class APIChatService {
         body: jsonEncode({"message": message}),
         headers: {"Content-Type": "application/json", "X-API-Key": apiKey},
       ).timeout(Duration(seconds: 30));
+
+      final data = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
         return data["response"];
       } else {
-        throw Exception("${response.statusCode}: ${response.reasonPhrase}");
+        final errorMessage = data["detail"] ?? response.reasonPhrase;
+        throw Exception(errorMessage);
       }
     } on SocketException {
       throw Exception("No Internet connection");
@@ -31,7 +33,7 @@ class APIChatService {
     } on TimeoutException {
       throw Exception("Request timed out");
     } catch (e) {
-      throw Exception("Unexpected error: =======>>>$e");
+      throw Exception("Unexpected error: $e");
     }
   }
 }
