@@ -1,71 +1,131 @@
 # 🤖 AI ChatBot
 
 <p align="center">
-  <img src="assets/images/app_icon.png" width="120" alt="AI ChatBot App Icon">
+
+  <img src="assets/images/app_icon.png" width="120" alt="AI ChatBot App Icon">
+
 </p>
 
 <p align="center">
-  A modern AI-powered chatbot mobile application built with <strong>Flutter</strong>, featuring a clean and responsive UI, local chat history, user profile management, and an AI model served through a Python API.
+
+  A modern AI-powered chatbot mobile application built with <strong>Flutter</strong>, featuring a clean and responsive UI, local chat history, user profile management, and an AI model served through a Python API.
+
 </p>
 
 ## ✨ Features
 
 - 🔐 User authentication with login and sign-up
+
 - 🤖 AI-powered conversations
+
 - 💬 Previous conversations and chat history
+
 - 👤 Profile page and profile picture management
+
 - 📷 Set profile picture using the camera or gallery
+
 - 🔐 Runtime permission handling for camera and internet access
+
+- 🔒 API key authentication and backend access protection
+
+- 🛡️ Input validation, normalization, and request hardening
+
+- 🚦 API rate limiting to help prevent abuse
+
+- ✅ AI model prediction and response validation
+
+- ⚠️ Safer API error handling and user-friendly error messages
+
 - 🗑️ Clear stored conversations/data
+
 - ❌ Complete account deletion
+
 - 📧 Email and password management
+
 - 🌙 Light and dark themes
+
 - 📜 Privacy Policy
+
 - 🎨 Custom app icon and splash screen
+
 - ✨ Smooth animations throughout the app
+
 - 🔔 Improved dialogs and user feedback
+
 - 💾 Local data storage
+
 - 🌐 API connectivity and internet-connection handling
 
 ## 🛠️ Tech Stack
 
 ### Mobile App
+
 - **Flutter / Dart**
+
 - **GetX** — state management and navigation
+
 - **SQLite (sqflite)** — local data storage
+
 - **HTTP** — API communication
+
 - **Inter** — application-wide font
+
 - **Lucide Icons** — icons
+
 - **Image Picker** — camera/gallery image selection
+
 - **Path Provider** — local file handling
+
 - **URL Launcher** — opening external links
+
 - **Flutter Native Splash** — custom splash screen
 
 ### AI / Backend
+
 - **Python**
+
 - **FastAPI**
+
 - **TensorFlow / Keras**
+
 - Intent-based text classification model
 
 ## 🏗️ Project Structure
 
 ```text
+
 ai_chatbot_colab/
+
 ├── ai_model/
+
 ├── android/
+
 ├── assets/
+
 ├── ios/
+
 ├── lib/
-│   ├── binding/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── services/
-│   ├── theme/
-│   ├── utilities/
-│   └── view/
+
+│   ├── binding/
+
+│   ├── controllers/
+
+│   ├── middleware/
+
+│   ├── services/
+
+│   ├── theme/
+
+│   ├── utilities/
+
+│   └── view/
+
 ├── test/
+
 ├── web/
+
 └── main.dart
+
 ```
 
 ## 📱 Screenshots
@@ -81,26 +141,52 @@ ai_chatbot_colab/
   <img src="assets/images/screen_shots/Screenshot_20260812_043752.png" width="220" alt="Profile Screen">
 </p>
 
+
 ## ✨ Features
 
-* 🔐 User account creation and authentication
-* 💬 AI-powered conversations
-* 🗂️ Chat history management
-* 🔄 Resume previous conversations from chat history
-* 🗑️ Delete individual conversations
-* 👤 Profile management
-* 🖼️ Change or remove profile picture
-* 📷 Select images from the camera or gallery
-* 💾 Local data storage
-* 🔒 Privacy-focused local data handling
-* 🌙 Light and dark themes
-* 🔑 Change account password
-* 📧 Change account email
-* 🗑️ Delete the entire user account
-* 📄 Built-in Privacy Policy
-* ✉️ Contact the developer through email
-* 🎨 Custom UI with animations
-* 📱 Responsive Flutter interface
+- 🔐 User account creation and authentication
+
+- 💬 AI-powered conversations
+
+- 🗂️ Chat history management
+
+- 🔄 Resume previous conversations from chat history
+
+- 🗑️ Delete individual conversations
+
+- 👤 Profile management
+
+- 🖼️ Change or remove profile picture
+
+- 📷 Select images from the camera or gallery
+
+- 💾 Local data storage
+
+- 🔒 Privacy-focused local data handling
+
+- 🌙 Light and dark themes
+
+- 🔑 Change account password
+
+- 📧 Change account email
+
+- 🗑️ Delete the entire user account
+
+- 📄 Built-in Privacy Policy
+
+- ✉️ Contact the developer through email
+
+- 🎨 Custom UI with animations
+
+- 📱 Responsive Flutter interface
+
+- 🔒 Protected backend API access using an API key
+
+- 🛡️ Hardened request validation and safe error responses
+
+- 🚦 IP-based API rate limiting
+
+- ✅ Validation of AI model outputs and generated responses
 
 ---
 
@@ -112,53 +198,63 @@ The application was developed using **Flutter and Dart**.
 
 ### State Management & Application Architecture
 
-* **GetX** — Used as an integrated solution throughout the application, including:
+- **GetX** — Used as an integrated solution throughout the application, including:
 
-  * State management
-  * Navigation
-  * Dependency management
-  * Application-level utilities
+  * State management
+
+  * Navigation
+
+  * Dependency management
+
+  * Application-level utilities
 
 ### Local Storage
 
-* **sqflite** — Local SQLite database for storing application data.
-* **path** — Handling database and file system paths.
-* **path_provider** — Accessing application directories on the device.
+- **sqflite** — Local SQLite database for storing application data.
+
+- **path** — Handling database and file system paths.
+
+- **path_provider** — Accessing application directories on the device.
 
 The application relies heavily on local storage, which helps keep user data on the device and supports a privacy-focused approach.
 
 ### Networking & API
 
-* **http** — Used to communicate between the Flutter application and the backend API.
+- **http** — Used to communicate between the Flutter application and the backend API.
 
 The Flutter application communicates with a Python-based backend that provides access to the AI model.
 
 ### UI & Icons
 
-* **Cupertino Icons** — iOS-style icons.
-* **Lucide Icons** — Additional modern icons not available in the default Flutter icon set.
-* **TweenAnimationBuilder** — Used to create custom UI animations and transitions.
+- **Cupertino Icons** — iOS-style icons.
+
+- **Lucide Icons** — Additional modern icons not available in the default Flutter icon set.
+
+- **TweenAnimationBuilder** — Used to create custom UI animations and transitions.
 
 ### Image Handling
 
-* **image_picker** — Used for selecting images from:
+- **image_picker** — Used for selecting images from:
 
-  * Camera
-  * Device gallery
+  * Camera
+
+  * Device gallery
 
 ### External Links
 
-* **url_launcher** — Used for opening external links, including the developer's email contact and other external resources.
+- **url_launcher** — Used for opening external links, including the developer's email contact and other external resources.
 
 ### App Launch & Branding
 
-* **flutter_native_splash** — Used to customize the application's splash screen and branding.
-* **flutter_launcher_icons** — Used to generate application launcher icons for Android and iOS.
+- **flutter_native_splash** — Used to customize the application's splash screen and branding.
+
+- **flutter_launcher_icons** — Used to generate application launcher icons for Android and iOS.
 
 ### Development Tools
 
-* **flutter_lints** — Recommended Dart and Flutter lint rules.
-* **flutter_test** — Flutter testing framework.
+- **flutter_lints** — Recommended Dart and Flutter lint rules.
+
+- **flutter_test** — Flutter testing framework.
 
 ---
 
@@ -169,45 +265,120 @@ The AI system is powered by a machine-learning model developed using **Python**.
 The project is divided into two main parts:
 
 ```text
+
 Flutter Application
-       │
-       │ HTTP Requests
-       ▼
+
+       │
+
+       │ HTTP Requests
+
+       ▼
+
 Python Backend API
-       │
-       ▼
+
+       │
+
+       ▼
+
 AI Model
-       │
-       ▼
+
+       │
+
+       ▼
+
 Generated Response
+
 ```
 
 ### Flutter Side
 
 The Flutter application handles:
 
-* User interface
-* User interactions
-* Chat interface
-* API communication
-* Local data storage
-* User settings
-* Profile management
-* Image handling
-* Authentication-related screens
-* Theme management
+- User interface
+
+- User interactions
+
+- Chat interface
+
+- API communication
+
+- Local data storage
+
+- User settings
+
+- Profile management
+
+- Image handling
+
+- Authentication-related screens
+
+- Theme management
 
 ### Python Side
 
 The Python backend handles:
 
-* API endpoints
-* AI model loading
-* Processing user messages
-* Generating AI responses
-* Communication between the Flutter application and the AI model
+- API endpoints
+
+- AI model loading
+
+- Processing user messages
+
+- Generating AI responses
+
+- Communication between the Flutter application and the AI model
+
+- API key verification and request schema validation
+
+- Input normalization and filtering of hidden or invalid characters
+
+- Validation of model predictions and generated response content
+
+- Startup checks for required model and data artifacts
+
+- Sanitized error responses that avoid exposing internal details
+
+- IP-based rate limiting to help prevent API abuse
 
 ---
+
+---
+
+## 🔐 Security & API Reliability
+
+### Backend Protection
+
+- **API Key Authentication:** Requests without a valid `X-API-Key` header are rejected with `401 Unauthorized`.
+
+- **Strict Request Validation:** Pydantic request schemas reject unexpected fields and enforce minimum and maximum input lengths.
+
+- **Input Normalization:** Unicode text is normalized using `NFKC`, with hidden/zero-width characters and null bytes filtered out.
+
+- **AI Model Output Validation:** TensorFlow predictions are checked for valid structure and dimensions, including handling of `None`, `NaN`, and infinite values.
+
+- **Safe Response Verification:** Responses loaded from `data.json` are checked to ensure they are non-empty and safe before being returned to the client.
+
+- **Startup Artifact Checks:** The backend verifies that `model.h5`, `tokenizer.pkl`, `encoder.pkl`, and `data.json` exist during initialization.
+
+- **Sanitized Error Handling:** Custom `422` and `500` responses avoid exposing internal stack traces, system paths, or secrets.
+
+- **Rate Limiting:** IP-based rate limiting using Upstash Redis helps prevent API abuse and returns `429 Too Many Requests` when limits are exceeded.
+
+### Flutter API Error Handling
+
+- **Structured Error Parsing:** `APIChatService` handles backend error responses from `data["detail"]` more gracefully.
+
+- **Improved Error State Management:** `HomeController` clears previous exception states when a new message is submitted.
+
+### API Key Configuration
+
+When building a release APK, provide the API key at build time:
+
+```bash
+flutter build apk --release --dart-define=API_KEY=YOUR_API_KEY
+```
+
+Replace `YOUR_API_KEY` with your configured API key. Make sure the backend's expected key and the key supplied to the app match.
 
 ## 🔒 Privacy
 
@@ -228,7 +399,9 @@ The Flutter UI includes custom layouts, reusable styling, responsive elements, a
 One of the animation techniques used in the application is Flutter's:
 
 ```dart
+
 TweenAnimationBuilder
+
 ```
 
 which was used to create smooth UI animations without relying on an external animation package.
@@ -241,36 +414,48 @@ which was used to create smooth UI animations without relying on an external ani
 
 Make sure you have the following installed:
 
-* Flutter SDK
-* Dart SDK
-* Android Studio or another Flutter-compatible IDE
-* A connected Android/iOS device or emulator
-* Python environment for running the backend
+- Flutter SDK
+
+- Dart SDK
+
+- Android Studio or another Flutter-compatible IDE
+
+- A connected Android/iOS device or emulator
+
+- Python environment for running the backend
 
 ### Installation
 
 Clone the repository:
 
 ```bash
+
 git clone <repository-url>
+
 ```
 
 Navigate to the project:
 
 ```bash
+
 cd <project-folder>
+
 ```
 
 Install Flutter dependencies:
 
 ```bash
+
 flutter pub get
+
 ```
 
 Run the application:
 
 ```bash
+
 flutter run
+
 ```
 
 ### Backend
@@ -280,6 +465,10 @@ The AI backend must also be running for the chatbot functionality to work.
 The Flutter application communicates with the Python backend through its API endpoint.
 
 > Configure the API endpoint according to your local/server environment before running the application.
+
+> For release builds, pass the API key at build time using:
+
+> `flutter build apk --release --dart-define=API_KEY=YOUR_API_KEY`
 
 ---
 
@@ -291,21 +480,33 @@ The Flutter application communicates with the Python backend through its API end
 
 Responsible for:
 
-* Complete Flutter UI implementation
-* Application screens and user experience
-* GetX application architecture
-* API integration from the Flutter side
-* Local SQLite database integration
-* Local data management
-* Image handling using camera and gallery
-* Theme system and Light/Dark mode
-* UI animations
-* Profile and account management
-* Chat history functionality
-* Settings and privacy-related screens
-* API communication and error handling
+- Complete Flutter UI implementation
 
-GitHub: [@Abdalla-Medhat](https://github.com/Abdalla-Medhat)
+- Application screens and user experience
+
+- GetX application architecture
+
+- API integration from the Flutter side
+
+- Local SQLite database integration
+
+- Local data management
+
+- Image handling using camera and gallery
+
+- Theme system and Light/Dark mode
+
+- UI animations
+
+- Profile and account management
+
+- Chat history functionality
+
+- Settings and privacy-related screens
+
+- API communication and error handling
+
+GitHub: [@Abdalla-Medhat](https\://github.com/Abdalla-Medhat)
 
 ### Don-Youssef
 
@@ -313,34 +514,53 @@ GitHub: [@Abdalla-Medhat](https://github.com/Abdalla-Medhat)
 
 Responsible for:
 
-* AI model development
-* Model training and preparation
-* Python backend
-* API endpoints
-* AI model integration with the backend
-* Backend-side processing of chatbot requests
+- AI model development
 
-GitHub: [@Don-Youssef](https://github.com/Don-Youssef)
+- Model training and preparation
+
+- Python backend
+
+- API endpoints
+
+- AI model integration with the backend
+
+- Backend-side processing of chatbot requests
+
+GitHub: [@Don-Youssef](https\://github.com/Don-Youssef)
 
 ---
 
 ## 📦 Main Dependencies
 
-| Package                  | Purpose                                                                        |
+| Package                  | Purpose                                                                        |
+
 | ------------------------ | ------------------------------------------------------------------------------ |
-| `get`                    | State management, navigation, dependency management, and application utilities |
-| `sqflite`                | Local SQLite database                                                          |
-| `path`                   | File and database paths                                                        |
-| `path_provider`          | Application storage directories                                                |
-| `http`                   | API communication                                                              |
-| `lucide_icons`           | Additional icons                                                               |
-| `url_launcher`           | Opening external links and email                                               |
-| `image_picker`           | Camera and gallery image selection                                             |
-| `flutter_native_splash`  | Splash screen and branding                                                     |
-| `flutter_launcher_icons` | Application launcher icons                                                     |
-| `cupertino_icons`        | iOS-style icons                                                                |
-| `flutter_lints`          | Dart/Flutter linting                                                           |
-| `flutter_test`           | Testing                                                                        |
+
+| `get`                    | State management, navigation, dependency management, and application utilities |
+
+| `sqflite`                | Local SQLite database                                                          |
+
+| `path`                   | File and database paths                                                        |
+
+| `path_provider`          | Application storage directories                                                |
+
+| `http`                   | API communication                                                              |
+
+| `lucide_icons`           | Additional icons                                                               |
+
+| `url_launcher`           | Opening external links and email                                               |
+
+| `image_picker`           | Camera and gallery image selection                                             |
+
+| `flutter_native_splash`  | Splash screen and branding                                                     |
+
+| `flutter_launcher_icons` | Application launcher icons                                                     |
+
+| `cupertino_icons`        | iOS-style icons                                                                |
+
+| `flutter_lints`          | Dart/Flutter linting                                                           |
+
+| `flutter_test`           | Testing                                                                        |
 
 ---
 
